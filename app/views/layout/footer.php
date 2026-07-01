@@ -1,7 +1,12 @@
-<footer class="site-footer">
-    <p>本站为信息发布平台，内容由发布者提供，请自行甄别、谨防诈骗。</p>
-    <p lang="es">Este sitio es un tablón de anuncios de empleo. El contenido es publicado por los usuarios.
-        <a href="/privacy.php">Política de privacidad y cookies</a>. <!-- 上线前经律师审阅，见 docs/隐私政策与Cookie_中西双语.md --></p>
+<footer class="winfoot">
+    <span class="b">西华招聘</span>
+    <span class="dom">zhaopin.es</span>
+    <span>免注册发布 · 帖子30天自动过期 · 电话默认遮号</span>
+    <span lang="es" class="legal">Tablón de anuncios de empleo. Contenido publicado por los usuarios.
+        <a href="/privacy.php">Política de privacidad y cookies</a></span>
 </footer>
+<?php if (isset($page) && is_file(dirname(ZP_APP_PATH) . '/zp_html/assets/js/' . $page . '.js')): ?>
+<script src="/assets/js/<?= zp_e($page) ?>.js"></script>
+<?php endif; ?>
 </body>
 </html>
