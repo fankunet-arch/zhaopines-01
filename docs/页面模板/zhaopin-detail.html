@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>急招川菜炒锅师傅 · 西华招聘</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF7F1; --ink:#221E2E; --ink-soft:#7A7486;
+    --coral:#FF5A3C; --coral-soft:#FFEDE8;
+    --jade:#0FB89A; --jade-soft:#E3F7F1;
+    --sun:#FFC83D; --card:#FFFFFF; --line:rgba(34,30,46,.09);
+    --shadow-card:0 2px 0 rgba(34,30,46,.04), 0 10px 24px -14px rgba(34,30,46,.2);
+    --disp:"Bricolage Grotesque","Noto Sans SC",sans-serif;
+    --body:"Noto Sans SC","Bricolage Grotesque",sans-serif;
+    --accent:var(--coral); --accent-soft:var(--coral-soft);
+  }
+  body[data-mode="seek"]{--accent:var(--jade); --accent-soft:var(--jade-soft)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--body);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-height:100vh}
+  button{font-family:var(--body)}
+  a{color:inherit;text-decoration:none}
+
+  .nav{display:flex;align-items:center;gap:16px;padding:14px 5vw;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50}
+  .back{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-soft);cursor:pointer}
+  .back svg{width:18px;height:18px}
+  .brand .zh{font-weight:900;letter-spacing:.04em;font-size:21px}
+  .brand .hl{color:var(--coral)}
+  .nav .spacer{flex:1}
+  .nav .dom{font-family:var(--disp);font-weight:700;font-size:13px;color:var(--ink-soft)}
+
+  .shell{max-width:1040px;margin:0 auto;padding:26px 5vw 70px}
+  .cols{display:grid;gap:30px;grid-template-columns:1fr 330px;grid-template-areas:"main side"}
+  .main{grid-area:main}
+  .side{grid-area:side;position:sticky;top:92px;align-self:start}
+
+  /* header of listing */
+  .ltop{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+  .tag{font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:9px}
+  .new{font-family:var(--disp);font-size:12px;font-weight:800;color:#5a4500;background:var(--sun);padding:5px 10px;border-radius:9px;letter-spacing:.03em;box-shadow:0 0 0 4px rgba(255,200,61,.25)}
+  h1{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3.6vw,34px);line-height:1.2;letter-spacing:-.01em;margin-bottom:12px}
+  .metaline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft);margin-bottom:26px}
+  .metaline .mi{display:flex;align-items:center;gap:5px}
+  .metaline svg{width:14px;height:14px}
+  .metaline .exp{color:var(--accent);font-weight:700}
+  .report{display:flex;align-items:center;gap:5px;color:var(--ink-soft);cursor:pointer;border:0;background:none;font-size:13px}
+  .report:hover{color:var(--accent)}
+
+  /* facts */
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:26px}
+  .fact{background:#fff;padding:16px 18px}
+  .fact .l{font-size:12px;color:var(--ink-soft);margin-bottom:5px}
+  .fact .v{font-weight:700;font-size:16px}
+  .fact .v.pay{font-family:var(--disp);font-weight:800;font-size:19px}
+  .fact .v.pay small{font-family:var(--body);font-weight:500;font-size:12.5px;color:var(--ink-soft)}
+
+  .sec{margin-bottom:28px}
+  .sec h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .sec h2::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--accent)}
+  .desc{font-size:15px;line-height:1.75;color:#3a3548}
+  .desc p{margin-bottom:10px}
+
+  .safety{background:var(--coral-soft);border:1px solid rgba(255,90,60,.18);border-radius:14px;padding:14px 16px;display:flex;gap:11px;align-items:flex-start}
+  .safety svg{width:19px;height:19px;color:var(--coral);flex:0 0 auto;margin-top:1px}
+  .safety .t{font-size:13.5px;line-height:1.6;color:#7a2f22}
+  .safety .t b{color:#5e2317}
+
+  /* related */
+  .rel{display:flex;flex-direction:column;gap:10px}
+  .relitem{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;box-shadow:var(--shadow-card);cursor:pointer;transition:transform .15s}
+  .relitem:hover{transform:translateY(-2px)}
+  .relitem .rt{flex:1;min-width:0}
+  .relitem .rt .rti{font-weight:700;font-size:14.5px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .relitem .rt .rtm{font-size:12.5px;color:var(--ink-soft)}
+  .relitem .rp{font-family:var(--disp);font-weight:800;font-size:15px;white-space:nowrap}
+  .relitem .rp small{font-family:var(--body);font-weight:500;font-size:11px;color:var(--ink-soft)}
+
+  /* side contact card */
+  .contact{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow-card)}
+  .contact .store{font-weight:700;font-size:17px;margin-bottom:3px}
+  .contact .sm{font-size:13px;color:var(--ink-soft);margin-bottom:18px;display:flex;align-items:center;gap:6px}
+  .contact .sm svg{width:14px;height:14px}
+  .callbtn{width:100%;border:0;cursor:pointer;border-radius:14px;background:var(--accent);color:#fff;font-weight:700;font-size:17px;padding:16px;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 12px 24px -10px var(--accent);transition:filter .15s}
+  .callbtn:hover{filter:brightness(1.05)}
+  .callbtn svg{width:19px;height:19px}
+  .callbtn .num{font-family:var(--disp);opacity:.9}
+  .wxrow{display:flex;align-items:center;gap:10px;margin-top:12px;border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+  .wxrow .wxi{color:#3aa84a;display:flex}.wxrow .wxi svg{width:20px;height:20px}
+  .wxrow .wxv{flex:1;font-size:14.5px;font-weight:600}
+  .wxrow .wxv .lab{font-size:11.5px;color:var(--ink-soft);font-weight:500;display:block}
+  .copybtn{border:1px solid var(--line);background:#fff;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--ink);padding:7px 11px}
+  .cmeta{border-top:1px solid var(--line);margin-top:18px;padding-top:16px;display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--ink-soft)}
+  .cmeta .cmi{display:flex;align-items:center;justify-content:space-between}
+  .cmeta .cmi b{color:var(--ink);font-weight:700}
+  .cmeta .cmi .exp{color:var(--accent)}
+
+  /* mobile sticky contact */
+  .m-contact{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--paper) 26%);gap:10px}
+  .m-contact .callbtn{flex:1}
+  .m-contact .mwx{flex:0 0 auto;width:58px;border:1px solid var(--line);background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#3aa84a;cursor:pointer}
+  .m-contact .mwx svg{width:24px;height:24px}
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(34,30,46,.45);display:none;align-items:flex-end;justify-content:center;z-index:80;padding:0}
+  .overlay.show{display:flex}
+  .modal{background:#fff;width:100%;max-width:440px;border-radius:22px 22px 0 0;padding:24px 22px calc(24px + env(safe-area-inset-bottom))}
+  .modal h3{font-size:18px;margin-bottom:4px}
+  .modal .ms{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .reasons{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+  .reason{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;cursor:pointer;font-size:14.5px}
+  .reason input{accent-color:var(--accent);width:18px;height:18px}
+  .reason.on{border-color:var(--accent);background:var(--accent-soft)}
+  .modal .mbtns{display:flex;gap:10px}
+  .modal .mbtns button{flex:1;border-radius:13px;padding:14px;font-weight:700;font-size:15px;cursor:pointer}
+  .mcancel{border:1px solid var(--line);background:#fff;color:var(--ink)}
+  .mok{border:0;background:var(--accent);color:#fff}
+
+  /* toast */
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 20px;border-radius:13px;font-size:14px;font-weight:700;box-shadow:0 16px 40px -12px rgba(34,30,46,.6);opacity:0;pointer-events:none;transition:.3s;z-index:90;display:flex;align-items:center;gap:9px}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast svg{width:18px;height:18px;color:#7CF2C8}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media (max-width:820px){
+    .cols{grid-template-columns:1fr;grid-template-areas:"main"}
+    .side{display:none}
+    .m-contact{display:flex}
+    .shell{padding-bottom:110px}
+    .nav .dom{display:none}
+    .overlay{align-items:flex-end}
+  }
+</style>
+</head>
+<body data-mode="hire">
+
+  <nav class="nav">
+    <span class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回列表</span>
+    <div class="brand"><span class="zh">西华<span class="hl">招聘</span></span></div>
+    <span class="spacer"></span>
+    <span class="dom">zhaopin.es</span>
+  </nav>
+
+  <div class="shell">
+    <div class="cols">
+
+      <!-- ===== MAIN ===== -->
+      <div class="main">
+        <div class="ltop">
+          <span class="tag">后厨 · 炒锅</span>
+          <span class="new">今日新</span>
+        </div>
+        <h1>急招川菜炒锅师傅，有经验优先</h1>
+        <div class="metaline">
+          <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>今天 09:24 发布</span>
+          <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>浏览 86</span>
+          <span class="mi exp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="5"/></svg>28 天后过期</span>
+          <button class="report" id="reportBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V4h13l-2 4 2 4H4"/></svg>举报</button>
+        </div>
+
+        <div class="facts">
+          <div class="fact"><div class="l">工作地区</div><div class="v">Usera</div></div>
+          <div class="fact"><div class="l">待遇</div><div class="v pay">1600–1900€ <small>/月</small></div></div>
+          <div class="fact"><div class="l">用工类型</div><div class="v">全职 · 包食宿</div></div>
+          <div class="fact"><div class="l">店铺</div><div class="v">老李川菜馆</div></div>
+        </div>
+
+        <div class="sec">
+          <h2>职位描述</h2>
+          <div class="desc">
+            <p>本店主营川菜，开店多年，生意稳定。现招炒锅师傅一名。</p>
+            <p>要求会做家常川菜、水煮、干锅、小炒等，出品稳定、干净麻利、能配合后厨节奏。有相关经验者优先，手脚利索的可面议带教。</p>
+            <p>做六休一，提供食宿。待遇 1600–1900€/月，按经验和能力面谈。有意者电话或微信联系，可来店里面谈、试工。</p>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="safety">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M12 8v4M12 16h.01"/></svg>
+            <div class="t"><b>谨防诈骗：</b>正规招工不会收取押金、报名费、培训费。请勿在见面前向对方转账或缴纳任何费用。</div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2>相似职位 · 同在 Usera</h2>
+          <div class="rel">
+            <div class="relitem">
+              <div class="rt"><div class="rti">招洗碗帮厨，包午饭，离地铁近</div><div class="rtm">粤口福 · Usera · 1小时前</div></div>
+              <div class="rp">1300€<small>/月</small></div>
+            </div>
+            <div class="relitem">
+              <div class="rt"><div class="rti">茶餐厅招全职服务员，会简单西语</div><div class="rtm">海记茶餐厅 · Cuatro Caminos · 2小时前</div></div>
+              <div class="rp">1400€<small>/月</small></div>
+            </div>
+            <div class="relitem">
+              <div class="rt"><div class="rti">Bazar 99 招全职店员，可长期</div><div class="rtm">Carabanchel · 昨天</div></div>
+              <div class="rp">320€<small>/周</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SIDE CONTACT ===== -->
+      <aside class="side">
+        <div class="contact">
+          <div class="store">老李川菜馆</div>
+          <div class="sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Usera，马德里</div>
+
+          <button class="callbtn" id="callDesk" data-tel="612 34 56 78">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+            拨打 <span class="num">612 ·· ··</span>
+          </button>
+
+          <div class="wxrow">
+            <span class="wxi"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4C5 4 2 6.6 2 9.9c0 1.8 1 3.4 2.6 4.5L4 17l2.7-1.4c.7.2 1.5.3 2.3.3h.6a4.6 4.6 0 0 1-.2-1.3c0-3 2.9-5.3 6.4-5.3h.6C15.8 6 12.7 4 9 4z"/></svg></span>
+            <span class="wxv"><span class="lab">微信</span>laolisichuan</span>
+            <button class="copybtn" id="copyWx">复制</button>
+          </div>
+
+          <div class="cmeta">
+            <div class="cmi"><span>发布时间</span><b>今天 09:24</b></div>
+            <div class="cmi"><span>浏览次数</span><b>86</b></div>
+            <div class="cmi"><span>有效期</span><span class="exp">28 天后过期</span></div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- mobile sticky contact -->
+  <div class="m-contact">
+    <button class="callbtn" id="callMob" data-tel="612 34 56 78">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+      拨打 <span class="num">612 ·· ··</span>
+    </button>
+    <button class="mwx" id="mwxBtn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4C5 4 2 6.6 2 9.9c0 1.8 1 3.4 2.6 4.5L4 17l2.7-1.4c.7.2 1.5.3 2.3.3h.6a4.6 4.6 0 0 1-.2-1.3c0-3 2.9-5.3 6.4-5.3h.6C15.8 6 12.7 4 9 4z"/></svg></button>
+  </div>
+
+  <!-- report modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h3>举报这条信息</h3>
+      <p class="ms">帮我们让列表保持真实、干净</p>
+      <div class="reasons" id="reasons">
+        <label class="reason"><input type="radio" name="r">虚假或诈骗信息</label>
+        <label class="reason"><input type="radio" name="r">职位已招满 / 已过期</label>
+        <label class="reason"><input type="radio" name="r">重复发布</label>
+        <label class="reason"><input type="radio" name="r">内容不当</label>
+        <label class="reason"><input type="radio" name="r">其他</label>
+      </div>
+      <div class="mbtns">
+        <button class="mcancel" id="mCancel">取消</button>
+        <button class="mok" id="mOk">提交举报</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span id="toastMsg">已复制微信号</span></div>
+
+<script>
+const $=id=>document.getElementById(id);
+function toast(msg){const t=$('toast');$('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
+
+// reveal phone
+function revealCall(btn){
+  if(btn.dataset.shown) return;
+  btn.querySelector('.num').textContent = btn.dataset.tel;
+  btn.dataset.shown='1';
+}
+$('callDesk')?.addEventListener('click',function(){revealCall(this);});
+$('callMob')?.addEventListener('click',function(){revealCall(this);});
+
+// copy wechat
+$('copyWx').addEventListener('click',()=>{
+  navigator.clipboard?.writeText('laolisichuan').catch(()=>{});
+  toast('已复制微信号：laolisichuan');
+});
+$('mwxBtn').addEventListener('click',()=>{
+  navigator.clipboard?.writeText('laolisichuan').catch(()=>{});
+  toast('已复制微信号：laolisichuan');
+});
+
+// report modal
+$('reportBtn').addEventListener('click',()=>$('overlay').classList.add('show'));
+$('mCancel').addEventListener('click',()=>$('overlay').classList.remove('show'));
+$('overlay').addEventListener('click',e=>{if(e.target===$('overlay'))$('overlay').classList.remove('show');});
+$('reasons').addEventListener('change',()=>{
+  document.querySelectorAll('#reasons .reason').forEach(l=>l.classList.toggle('on',l.querySelector('input').checked));
+});
+$('mOk').addEventListener('click',()=>{
+  $('overlay').classList.remove('show');
+  toast('已收到你的举报，谢谢（演示）');
+});
+</script>
+</body>
+</html>

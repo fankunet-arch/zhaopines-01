@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西华招聘 · zhaopin.es</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF7F1; --ink:#221E2E; --ink-soft:#7A7486;
+    --coral:#FF5A3C; --coral-soft:#FFEDE8;
+    --jade:#0FB89A; --jade-soft:#E3F7F1;
+    --sun:#FFC83D; --card:#FFFFFF; --line:rgba(34,30,46,.09);
+    --shadow-card:0 2px 0 rgba(34,30,46,.04), 0 10px 24px -14px rgba(34,30,46,.2);
+    --disp:"Bricolage Grotesque","Noto Sans SC",sans-serif;
+    --body:"Noto Sans SC","Bricolage Grotesque",sans-serif;
+    --accent:var(--coral); --accent-soft:var(--coral-soft);
+  }
+  body[data-mode="seek"]{--accent:var(--jade); --accent-soft:var(--jade-soft)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--body);color:var(--ink);background:var(--paper);
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  button{font-family:var(--body)}
+  a{color:inherit;text-decoration:none}
+  .brand .zh{font-weight:900;letter-spacing:.04em}
+  .brand .hl{color:var(--coral)}
+
+  /* ===================== DESKTOP HEADER ===================== */
+  .d-nav{display:flex;align-items:center;gap:22px;padding:15px 5vw;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50}
+  .d-nav .brand .zh{font-size:24px}
+  .d-search{flex:1;max-width:460px;display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 15px;color:var(--ink-soft);font-size:14px}
+  .d-search svg{width:17px;height:17px}
+  .d-search input{border:0;background:transparent;outline:none;font-family:var(--body);font-size:14px;color:var(--ink);width:100%}
+  .d-nav .spacer{flex:1}
+  .postbtn{border:0;cursor:pointer;background:var(--ink);color:#fff;border-radius:12px;font-weight:700;font-size:14.5px;padding:11px 18px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 22px -12px rgba(34,30,46,.8)}
+  .postbtn svg{width:17px;height:17px}
+
+  .band{padding:32px 5vw 26px;border-bottom:1px solid var(--line);
+    background:radial-gradient(700px 300px at 0% 0%, #FFEDE6 0%, rgba(255,237,230,0) 60%),radial-gradient(700px 300px at 100% 100%, #E4F7F1 0%, rgba(228,247,241,0) 60%),#fff}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--accent);margin-bottom:13px}
+  .eyebrow .d{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .band h1{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4vw,42px);letter-spacing:-.01em;line-height:1.02;margin-bottom:8px}
+  .band h1 .loc{color:var(--accent)}
+  .band .sub{color:var(--ink-soft);font-size:16px;margin-bottom:20px}
+  .band .sub b{color:var(--ink);font-weight:700}
+  .bandrow{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .stats{display:flex;gap:10px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 16px}
+  .stat .v{font-family:var(--disp);font-weight:800;font-size:20px;line-height:1}
+  .stat .v.up{color:#caa100}
+  .stat .l{font-size:11.5px;color:var(--ink-soft);margin-top:3px}
+
+  /* segmented (shared look) */
+  .seg{background:#fff;border:1px solid var(--line);border-radius:15px;padding:5px;display:flex;box-shadow:var(--shadow-card)}
+  .seg button{border:0;cursor:pointer;background:transparent;font-weight:700;font-size:15px;color:var(--ink-soft);padding:11px 24px;border-radius:11px;display:flex;align-items:center;gap:8px;transition:background .15s,color .15s}
+  .seg button .n{font-family:var(--disp);font-size:12.5px;opacity:.7}
+  .seg button.on{color:#fff;background:var(--accent);box-shadow:0 8px 16px -8px var(--accent)}
+
+  /* ===================== MOBILE HEADER ===================== */
+  .m-head{display:none;position:sticky;top:0;z-index:50;background:var(--paper);padding-top:env(safe-area-inset-top)}
+  .m-bar{display:flex;align-items:center;justify-content:space-between;padding:13px 18px 9px}
+  .m-bar .brand .zh{font-size:22px}
+  .m-bar .tip{font-size:12px;color:var(--ink-soft);font-family:var(--disp);font-weight:700}
+  .m-seg{margin:0 16px 12px} .m-seg .seg button{flex:1;justify-content:center;font-size:15px;padding:11px 0}
+  .m-chips{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .m-chips::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;font-size:13px;font-weight:500;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 13px;white-space:nowrap;cursor:pointer}
+  .chip.act{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* ===================== BODY LAYOUT ===================== */
+  .wrap{display:grid;grid-template-columns:248px 1fr;gap:32px;max-width:1280px;margin:0 auto;padding:28px 5vw 56px}
+  .rail{position:sticky;top:92px;align-self:start;display:flex;flex-direction:column;gap:22px}
+  .group .gt{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:10px}
+  .filt{display:flex;flex-direction:column;gap:2px}
+  .filt a{display:flex;align-items:center;justify-content:space-between;font-size:14.5px;padding:10px 12px;border-radius:11px;cursor:pointer}
+  .filt a .c{font-family:var(--disp);font-size:12.5px;color:var(--ink-soft)}
+  .filt a.on{background:var(--ink);color:#fff;font-weight:700}
+  .filt a.on .c{color:rgba(255,255,255,.7)}
+  .postcard{background:var(--ink);color:#fff;border-radius:18px;padding:20px}
+  .postcard h4{font-size:16px;margin-bottom:6px}
+  .postcard p{font-size:13px;color:#cfc9da;line-height:1.5;margin-bottom:14px}
+  .postcard button{width:100%;border:0;cursor:pointer;background:var(--accent);color:#fff;border-radius:11px;font-weight:700;font-size:14.5px;padding:12px}
+
+  /* feed */
+  .day{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;color:var(--ink-soft);letter-spacing:.05em;margin:2px 0 16px}
+  .day.gap{margin-top:30px}
+  .day::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px 19px;box-shadow:var(--shadow-card);position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+  .card.faded{opacity:.6}
+  .card:hover{transform:translateY(-3px);box-shadow:0 4px 0 rgba(34,30,46,.04),0 22px 36px -18px rgba(34,30,46,.3)}
+  .ctop{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .tag{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:5px 10px;border-radius:8px}
+  .new{font-family:var(--disp);font-size:11px;font-weight:800;color:#5a4500;background:var(--sun);padding:4px 9px;border-radius:8px;letter-spacing:.03em;box-shadow:0 0 0 4px rgba(255,200,61,.25)}
+  .ago{margin-left:auto;font-size:12.5px;color:var(--ink-soft)}
+  .title{font-weight:700;font-size:17px;line-height:1.35;margin-bottom:9px}
+  .meta{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink-soft);margin-bottom:12px}
+  .meta svg{width:14px;height:14px;flex:0 0 auto}
+  .foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .pay{font-family:var(--disp);font-weight:800;font-size:18px;color:var(--ink)}
+  .pay small{font-family:var(--body);font-weight:500;font-size:12.5px;color:var(--ink-soft)}
+  .cact{margin-left:auto;display:flex;gap:9px}
+  .call{border:0;cursor:pointer;border-radius:11px;background:var(--accent);color:#fff;font-weight:700;font-size:14px;padding:10px 15px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 16px -9px var(--accent);transition:filter .15s}
+  .call:hover{filter:brightness(1.05)}
+  .call svg{width:15px;height:15px}
+  .call .num{font-family:var(--disp);opacity:.85}
+  .wx{border:1px solid var(--line);background:#fff;border-radius:11px;cursor:pointer;width:44px;display:flex;align-items:center;justify-content:center;color:#3aa84a}
+  .wx svg{width:20px;height:20px}
+
+  .winfoot{padding:20px 5vw;border-top:1px solid var(--line);color:var(--ink-soft);font-size:12.5px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;max-width:1280px;margin:0 auto}
+  .winfoot .b{font-family:var(--body);font-weight:900;color:var(--ink)}
+  .winfoot .dom{font-family:var(--disp);font-weight:700;color:var(--coral)}
+
+  /* mobile bottom post bar */
+  .m-post{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--paper) 28%)}
+  .m-post button{width:100%;border:0;cursor:pointer;border-radius:16px;background:var(--ink);color:#fff;font-weight:700;font-size:16px;padding:15px;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 16px 30px -12px rgba(34,30,46,.7)}
+  .m-post button svg{width:19px;height:19px}
+  .m-post button .free{font-size:12px;font-weight:500;color:#cfc9da;margin-left:2px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* ===================== RESPONSIVE SWITCH ===================== */
+  @media (max-width:760px){
+    .d-nav,.band{display:none}
+    .m-head{display:block}
+    .m-post{display:block}
+    .wrap{display:block;padding:14px 16px 110px}
+    .rail{display:none}
+    .grid{grid-template-columns:1fr}
+    .card{border-radius:20px}
+    .title{font-size:16.5px}
+  }
+</style>
+</head>
+<body data-mode="hire">
+
+  <!-- ===== DESKTOP HEADER ===== -->
+  <nav class="d-nav">
+    <div class="brand"><span class="zh">西华<span class="hl">招聘</span></span></div>
+    <label class="d-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+      <input placeholder="搜店名、工种、地区…">
+    </label>
+    <div class="spacer"></div>
+    <button class="postbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息</button>
+  </nav>
+
+  <div class="band">
+    <span class="eyebrow"><span class="d"></span>西班牙华人 · 餐饮 / 百元店 / 美甲 招工求职</span>
+    <h1>在 <span class="loc">Usera</span> <span id="bandVerb">找活、招人</span></h1>
+    <p class="sub">看一眼就联系上 —— <b>免注册发布、一键拨打、每天刷新</b>，不用研究网站。</p>
+    <div class="bandrow">
+      <div class="seg">
+        <button data-mode="hire" class="on">招聘 <span class="n">218</span></button>
+        <button data-mode="seek">求职 <span class="n">96</span></button>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="v up">+38</div><div class="l">今日新增</div></div>
+        <div class="stat"><div class="v">218</div><div class="l">在招岗位</div></div>
+        <div class="stat"><div class="v">12</div><div class="l">覆盖地区</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MOBILE HEADER ===== -->
+  <header class="m-head">
+    <div class="m-bar">
+      <div class="brand"><span class="zh">西华<span class="hl">招聘</span></span></div>
+      <span class="tip">zhaopin.es</span>
+    </div>
+    <div class="m-seg">
+      <div class="seg">
+        <button data-mode="hire" class="on">招聘 <span class="n">218</span></button>
+        <button data-mode="seek">求职 <span class="n">96</span></button>
+      </div>
+    </div>
+    <div class="m-chips">
+      <span class="chip act">📍 Usera</span>
+      <span class="chip">后厨</span>
+      <span class="chip">跑堂</span>
+      <span class="chip">百元店</span>
+      <span class="chip">美甲</span>
+      <span class="chip">奶茶</span>
+    </div>
+  </header>
+
+  <!-- ===== BODY ===== -->
+  <div class="wrap">
+    <aside class="rail">
+      <div class="group">
+        <div class="gt">地区</div>
+        <div class="filt">
+          <a class="on">Usera<span class="c">96</span></a>
+          <a>Cuatro Caminos<span class="c">41</span></a>
+          <a>Carabanchel<span class="c">33</span></a>
+          <a>Tetuán<span class="c">28</span></a>
+          <a>Centro<span class="c">20</span></a>
+        </div>
+      </div>
+      <div class="group">
+        <div class="gt">工种</div>
+        <div class="filt">
+          <a>后厨 / 厨师<span class="c">74</span></a>
+          <a>跑堂 / 服务<span class="c">62</span></a>
+          <a>百元店店员<span class="c">35</span></a>
+          <a>美甲师<span class="c">22</span></a>
+          <a>奶茶 / 咖啡<span class="c">18</span></a>
+        </div>
+      </div>
+      <div class="postcard">
+        <h4>招到人了？</h4>
+        <p>发布只填 5 项，1 分钟搞定。招满随手下架，否则 30 天自动过期。</p>
+        <button>免费发布招聘</button>
+      </div>
+    </aside>
+
+    <main id="feed"><!-- rendered by JS --></main>
+  </div>
+
+  <div class="winfoot">
+    <span class="b">西华招聘</span>
+    <span class="dom">zhaopin.es</span>
+    <span>免注册发布 · 帖子30天自动过期 · 电话默认遮号</span>
+  </div>
+
+  <!-- mobile sticky post -->
+  <div class="m-post">
+    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息 <span class="free">· 免费 · 30天有效</span></button>
+  </div>
+
+<script>
+const ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+const ICON_TEL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>';
+const ICON_WX  = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4C5 4 2 6.6 2 9.9c0 1.8 1 3.4 2.6 4.5L4 17l2.7-1.4c.7.2 1.5.3 2.3.3h.6a4.6 4.6 0 0 1-.2-1.3c0-3 2.9-5.3 6.4-5.3h.6C15.8 6 12.7 4 9 4z"/></svg>';
+
+const DATA = {
+  hire: {
+    today: [
+      {tag:'后厨 · 炒锅', neu:true, ago:'1小时前', title:'急招川菜炒锅师傅，有经验优先', place:'老李川菜馆 · Usera', pay:'1600–1900€', note:'/月·包食宿', tel:'612 34 56 78', wx:true},
+      {tag:'跑堂 · 服务员', neu:true, ago:'2小时前', title:'茶餐厅招全职服务员，会简单西语', place:'海记茶餐厅 · Cuatro Caminos', pay:'1400€', note:'/月 + 小费', tel:'644 11 22 33'},
+      {tag:'美甲师', ago:'5小时前', title:'招美甲师，会做光疗、款式，客源稳定', place:'Lily Nails · Centro', pay:'底薪 + 提成50%', tel:'688 90 12 34', wx:true},
+      {tag:'奶茶店 · 兼职', ago:'今天', title:'珍珠奶茶店招兼职店员，周末班', place:'Tetuán', pay:'9€', note:'/时 · 兼职', tel:'631 55 66 77'},
+    ],
+    yesterday: [
+      {tag:'百元店 · 店员', ago:'昨天', faded:true, title:'Bazar 99 招全职店员，可长期', place:'Carabanchel', pay:'320€', note:'/周 · 全职', tel:'602 33 44 55'},
+      {tag:'后厨 · 帮厨', ago:'昨天', faded:true, title:'招洗碗帮厨，包午饭，离地铁近', place:'粤口福 · Usera', pay:'1300€', note:'/月', tel:'610 77 88 99'},
+    ]
+  },
+  seek: {
+    today: [
+      {tag:'求职 · 帮厨', neu:true, ago:'3小时前', title:'找帮厨/洗碗工作，能吃苦、可全职', place:'本人现居 Usera · 可就近', pay:'面议', tel:'699 12 34 56', wx:true},
+      {tag:'求职 · 服务员', ago:'今天', title:'有2年跑堂经验，找全职服务员，西语流利', place:'本人现居 Centro', pay:'1500€+', note:'/月', tel:'677 22 33 44'},
+      {tag:'求职 · 美甲', ago:'今天', title:'美甲师找工作，会光疗手绘，可看作品', place:'本人现居 Tetuán', pay:'提成优先', tel:'655 88 99 00', wx:true},
+    ],
+    yesterday: [
+      {tag:'求职 · 店员', ago:'昨天', faded:true, title:'找百元店或超市店员，长期稳定', place:'本人现居 Carabanchel', pay:'面议', tel:'622 11 00 99'},
+    ]
+  }
+};
+
+function mask(tel){ const p=tel.split(' '); return p[0]+' ·· ··'; }
+
+function cardHTML(c){
+  return `<div class="card${c.faded?' faded':''}">
+    <div class="ctop">
+      <span class="tag">${c.tag}</span>
+      ${c.neu?'<span class="new">今日新</span>':''}
+      <span class="ago">${c.ago}</span>
+    </div>
+    <div class="title">${c.title}</div>
+    <div class="meta">${ICON_PIN}${c.place}</div>
+    <div class="foot">
+      <div class="pay">${c.pay}${c.note?` <small>${c.note}</small>`:''}</div>
+      <div class="cact">
+        <button class="call" data-tel="${c.tel}">${ICON_TEL}拨打 <span class="num">${mask(c.tel)}</span></button>
+        ${c.wx?`<button class="wx" title="微信">${ICON_WX}</button>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const mode = document.body.dataset.mode;
+  const d = DATA[mode];
+  const feed = document.getElementById('feed');
+  feed.innerHTML =
+    `<div class="day">今日</div><div class="grid">${d.today.map(cardHTML).join('')}</div>`+
+    `<div class="day gap">昨天</div><div class="grid">${d.yesterday.map(cardHTML).join('')}</div>`;
+}
+
+document.querySelectorAll('.seg button[data-mode]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const mode = btn.dataset.mode;
+    document.body.dataset.mode = mode;
+    document.querySelectorAll('.seg button[data-mode]').forEach(b=>b.classList.toggle('on', b.dataset.mode===mode));
+    const verb = document.getElementById('bandVerb');
+    if(verb) verb.textContent = mode==='hire' ? '找活、招人' : '想招到的人在这';
+    render();
+  });
+});
+
+document.addEventListener('click',e=>{
+  const btn = e.target.closest('.call');
+  if(!btn) return;
+  const num = btn.querySelector('.num');
+  if(btn.dataset.shown) return;
+  num.textContent = btn.dataset.tel;
+  btn.dataset.shown = '1';
+});
+
+document.querySelectorAll('.filt').forEach(group=>{
+  group.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    group.querySelectorAll('a').forEach(x=>x.classList.remove('on'));
+    a.classList.add('on');
+  }));
+});
+document.querySelector('.m-chips')?.addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  document.querySelectorAll('.m-chips .chip').forEach(x=>x.classList.remove('act'));
+  c.classList.add('act');
+});
+
+render();
+</script>
+</body>
+</html>
