@@ -1,0 +1,2 @@
+# 机密配置：只提交 config.example.php 模板
+/app/config/config.php

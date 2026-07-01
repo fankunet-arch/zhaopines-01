@@ -1,0 +1,45 @@
+/* 站点基础样式（移动优先）。Bootstrap 5 落地时置于 assets/vendor/ 本地引用。 */
+:root {
+    --zp-primary: #c0392b;
+    --zp-text: #222;
+    --zp-muted: #888;
+    --zp-border: #e5e5e5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    color: var(--zp-text);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    line-height: 1.6;
+}
+
+a { color: var(--zp-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 720px; margin: 0 auto; padding: 1rem; }
+.muted { color: var(--zp-muted); font-size: .875rem; }
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid var(--zp-border);
+}
+
+.site-brand { font-size: 1.25rem; font-weight: 700; color: var(--zp-primary); }
+.site-nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.site-nav a { color: var(--zp-text); }
+
+.site-footer {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-top: 1px solid var(--zp-border);
+    color: var(--zp-muted);
+    font-size: .8125rem;
+    text-align: center;
+}
