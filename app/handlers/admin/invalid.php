@@ -17,7 +17,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $db->prepare("UPDATE $P SET invalid_count = 0 WHERE id = ?")->execute([$id]);
         $db->prepare('DELETE FROM ' . zp_table('invalid_marks') . ' WHERE post_id = ?')->execute([$id]);
     }
-    header('Location: /c/cp/invalid.php');
+    header('Location: /c/cp/invalid');
     exit;
 }
 

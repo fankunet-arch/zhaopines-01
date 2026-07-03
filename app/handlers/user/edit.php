@@ -50,7 +50,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 $content, zp_content_hash($content), $contactName, $phone, zp_phone_norm($phone),
                 $wechat !== '' ? $wechat : null, $regionId, $categoryId, zp_now(), (int) $post['id'],
             ]);
-            header('Location: /user/my_posts.php');
+            header('Location: /user/my_posts');
             exit;
         }
     }

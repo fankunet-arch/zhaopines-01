@@ -6,7 +6,7 @@ declare(strict_types=1);
  * docs/01 §4.3：Google 验证通过且邮箱在白名单内，双重满足才授权。
  */
 
-/** Google 授权跳转 URL（管理员登录用，redirect 回 /c/cp/login.php）。 */
+/** Google 授权跳转 URL（管理员登录用，redirect 回 /c/cp/login）。 */
 function zp_google_auth_url(string $redirectUri): string
 {
     zp_session_start();
@@ -101,7 +101,7 @@ function zp_require_user(): array
 {
     $user = zp_user();
     if ($user === null) {
-        header('Location: /user/login.php');
+        header('Location: /user/login');
         exit;
     }
     return $user;

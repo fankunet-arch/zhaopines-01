@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/_nav.php'; ?>
   <div class="shell a-shell">
     <?php if ($saved): ?><p class="a-saved">✓ 已保存</p><?php endif; ?>
-    <form method="post" action="/c/cp/settings.php">
+    <form method="post" action="/c/cp/settings">
       <input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>">
       <div class="a-tablewrap"><table class="a-table">
         <tr><th>参数键</th><th>值</th><th>最后修改</th></tr>

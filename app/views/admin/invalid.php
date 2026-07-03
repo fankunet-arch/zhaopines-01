@@ -5,7 +5,7 @@
       <tr><th>信息</th><th>失效标记数</th><th>地区 / 类别</th><th>状态</th><th>操作</th></tr>
       <?php foreach ($rows as $r): ?>
       <tr class="<?= (int) $r['invalid_count'] >= $threshold ? 'sus' : '' ?>">
-        <td class="c-content"><a class="a-link" href="/detail.php?id=<?= zp_e($r['public_code']) ?>" target="_blank"><?= zp_e(zp_post_excerpt($r['content'], 28)) ?></a></td>
+        <td class="c-content"><a class="a-link" href="/detail?id=<?= zp_e($r['public_code']) ?>" target="_blank"><?= zp_e(zp_post_excerpt($r['content'], 28)) ?></a></td>
         <td><b><?= (int) $r['invalid_count'] ?></b> 次</td>
         <td><?= zp_e($r['region_name']) ?> / <?= zp_e($r['category_name']) ?></td>
         <td><?= zp_e(zp_post_status_label((int) $r['status'])) ?></td>

@@ -17,7 +17,7 @@ document.querySelectorAll('.js-call').forEach(btn=>{
   btn.addEventListener('click', async ()=>{
     if(btn.dataset.tel){ location.href='tel:'+btn.dataset.tel.replace(/\s/g,''); return; }
     try{
-      const d = await api('/get_contact.php', {code:btn.dataset.code, ctype:'phone'});
+      const d = await api('/get_contact', {code:btn.dataset.code, ctype:'phone'});
       document.querySelectorAll('.js-call').forEach(b=>{
         b.dataset.tel = d.value;
         b.querySelector('.num').textContent = d.value;
@@ -31,7 +31,7 @@ document.querySelectorAll('.js-call').forEach(btn=>{
 document.querySelectorAll('.js-wx').forEach(btn=>{
   btn.addEventListener('click', async ()=>{
     try{
-      const d = await api('/get_contact.php', {code:btn.dataset.code, ctype:'wechat'});
+      const d = await api('/get_contact', {code:btn.dataset.code, ctype:'wechat'});
       document.querySelectorAll('.js-wx-value').forEach(el=>el.textContent=d.value);
       const copyBtn = document.querySelector('.copybtn.js-wx');
       if(copyBtn) copyBtn.textContent='复制';
@@ -44,7 +44,7 @@ document.querySelectorAll('.js-wx').forEach(btn=>{
 // 失效反馈
 $('invalidBtn')?.addEventListener('click', async function(){
   try{
-    await api('/mark_invalid.php', {code:this.dataset.code});
+    await api('/mark_invalid', {code:this.dataset.code});
     toast('已记录，谢谢反馈');
   }catch(err){ toast(err.message); }
 });
@@ -59,7 +59,7 @@ $('reasons').addEventListener('change',()=>{
 $('mOk').addEventListener('click', async function(){
   const checked = document.querySelector('#reasons input:checked');
   try{
-    const d = await api('/report.php', {code:this.dataset.code, reason:checked?checked.value:''});
+    const d = await api('/report', {code:this.dataset.code, reason:checked?checked.value:''});
     $('overlay').classList.remove('show');
     toast(d.msg || '已收到你的举报，谢谢');
   }catch(err){ toast(err.message); }

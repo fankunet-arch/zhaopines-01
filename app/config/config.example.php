@@ -19,7 +19,7 @@ return [
     'google_oauth' => [
         'client_id'     => '',
         'client_secret' => '',
-        'redirect_uri'  => 'https://www.zhaopin.es/user/login.php',
+        'redirect_uri'  => 'https://www.zhaopin.es/user/login',
     ],
 
     // Brevo 事务邮件（举报提醒等；需配好域名 SPF/DKIM）
@@ -35,9 +35,9 @@ return [
     ],
 
     // 本地调试专用（生产环境两项都必须留空！）：
-    // fake_admin_email 非空时 /c/cp/login.php?dev=1 免 OAuth 直登后台
+    // fake_admin_email 非空时 /c/cp/login?dev=1 免 OAuth 直登后台
     //（邮箱仍须在 zhaopin_admins 白名单内）；
-    // fake_user_name 非空时 /user/login.php?dev=1 免 OAuth 直登用户后台。
+    // fake_user_name 非空时 /user/login?dev=1 免 OAuth 直登用户后台。
     'dev' => [
         'fake_admin_email' => '',
         'fake_user_name'   => '',

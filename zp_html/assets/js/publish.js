@@ -81,7 +81,7 @@ $('pubForm').addEventListener('submit', async e=>{
   errEl.textContent = '';
   btn.disabled = true; btn.textContent = '发布中…';
   try{
-    const r = await fetch('/publish.php', {method:'POST', body:new FormData($('pubForm'))});
+    const r = await fetch('/publish', {method:'POST', body:new FormData($('pubForm'))});
     const d = await r.json().catch(()=>({}));
     if(r.ok && d.ok){
       toast('发布成功，正在跳转…');

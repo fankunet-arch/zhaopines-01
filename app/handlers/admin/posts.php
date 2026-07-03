@@ -14,7 +14,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     if ($id > 0 && $newStatus !== null) {
         $db->prepare("UPDATE $P SET status = ?, updated_at = ? WHERE id = ?")->execute([$newStatus, zp_now(), $id]);
     }
-    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/c/cp/posts.php'));
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/c/cp/posts'));
     exit;
 }
 

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * 管理员登录（/c/cp/login.php）：Google OAuth + 白名单，零密码。
+ * 管理员登录（/c/cp/login）：Google OAuth + 白名单，零密码。
  * 本地调试：config['dev']['fake_admin_email'] 非空时提供免 OAuth 直登（生产必须留空）。
  */
 zp_session_start();
@@ -11,7 +11,7 @@ if (zp_admin() !== null) {
     exit;
 }
 
-$redirectUri = (string) zp_config('site.base_url', '') . '/c/cp/login.php';
+$redirectUri = (string) zp_config('site.base_url', '') . '/c/cp/login';
 $err = '';
 
 // 本地调试直登（仅当 config.dev.fake_admin_email 明确配置时可用）

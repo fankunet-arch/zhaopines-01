@@ -24,7 +24,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
             $db->prepare("UPDATE $CP SET status = 2, reviewed_at = ? WHERE id = ?")->execute([zp_now(), $id]);
         }
     }
-    header('Location: /c/cp/categories.php');
+    header('Location: /c/cp/categories');
     exit;
 }
 

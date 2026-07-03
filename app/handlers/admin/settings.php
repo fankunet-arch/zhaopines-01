@@ -14,7 +14,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $db->prepare("UPDATE $S SET svalue = ?, updated_at = ? WHERE skey = ?")
            ->execute([(string) $value, zp_now(), (string) $key]);
     }
-    header('Location: /c/cp/settings.php?saved=1');
+    header('Location: /c/cp/settings?saved=1');
     exit;
 }
 $saved = ($_GET['saved'] ?? '') === '1';

@@ -4,7 +4,7 @@ $views = (int) $post['phone_views'] + (int) $post['wechat_views'];
 $isToday = zp_day_bucket($post['bumped_at']) === '今日';
 $isSeekPost = (int) $post['type'] === 2;
 ?>
-      <div class="card<?= (int) $post['status'] !== 1 ? ' faded' : '' ?>" data-href="/detail.php?id=<?= zp_e($post['public_code']) ?>">
+      <div class="card<?= (int) $post['status'] !== 1 ? ' faded' : '' ?>" data-href="/detail?id=<?= zp_e($post['public_code']) ?>">
         <div class="ctop">
           <span class="tag"><?= $isSeekPost ? '求职 · ' : '' ?><?= zp_e($post['category_name']) ?></span>
           <?php if ((int) $post['is_top'] === 1): ?><span class="new">置顶</span>

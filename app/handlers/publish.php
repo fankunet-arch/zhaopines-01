@@ -112,12 +112,12 @@ if (($dup = $stmt->fetch()) !== false) {
     if ($user !== null && (int) $dup['poster_type'] === 2 && (int) $dup['user_id'] === $user['id']) {
         $db->prepare('UPDATE ' . zp_table('posts') . ' SET bumped_at = ?, status = 1 WHERE id = ?')
            ->execute([$now, (int) $dup['id']]);
-        zp_json(['ok' => true, 'bumped' => true, 'url' => '/detail.php?id=' . $dup['public_code'],
+        zp_json(['ok' => true, 'bumped' => true, 'url' => '/detail?id=' . $dup['public_code'],
             'msg' => '这条信息 7 天内已发过，已为你顶帖刷新排序']);
     }
     zp_json(['ok' => false, 'error' => 'duplicate',
         'msg' => '相同内容近期已发布过（同一信息每天限发 1 条；注册用户可在 7 天内用"顶帖"刷新排序）',
-        'url' => '/detail.php?id=' . $dup['public_code']], 409);
+        'url' => '/detail?id=' . $dup['public_code']], 409);
 }
 
 // 新类别建议 → 待审核表（物理隔离，帖子仍挂在所选正式类别）
@@ -149,4 +149,4 @@ $db->prepare(
     $suspicious, $ipBin, $now, $now,
 ]);
 
-zp_json(['ok' => true, 'url' => '/detail.php?id=' . $publicCode, 'code' => $publicCode]);
+zp_json(['ok' => true, 'url' => '/detail?id=' . $publicCode, 'code' => $publicCode]);

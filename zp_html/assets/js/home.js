@@ -7,7 +7,7 @@ function toast(msg){
 }
 
 async function getContact(code, ctype){
-  const r = await fetch('/get_contact.php', {
+  const r = await fetch('/get_contact', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({code, ctype})
   });

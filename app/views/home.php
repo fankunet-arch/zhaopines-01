@@ -7,7 +7,7 @@
  * @var array $groups  今日/昨天/更早 => posts[]
  */
 $hire = $mode !== 'seek';
-$qs = fn(array $extra) => '/list.php?' . http_build_query(array_filter(array_merge([
+$qs = fn(array $extra) => '/list?' . http_build_query(array_filter(array_merge([
     'type' => $mode === 'seek' ? 'seek' : 'job',
     'region' => $filters['region_id'] ?: null,
     'cat' => $filters['category_id'] ?: null,
@@ -21,15 +21,15 @@ foreach ($regions as $r) {
 ?>
   <!-- ===== 桌面顶栏 ===== -->
   <nav class="d-nav">
-    <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
-    <form class="d-search" method="get" action="/list.php">
+    <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
+    <form class="d-search" method="get" action="/list">
       <input type="hidden" name="type" value="<?= $hire ? 'job' : 'seek' ?>">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
       <input name="q" value="<?= zp_e($filters['q']) ?>" placeholder="搜内容、联系人、地区…">
     </form>
     <div class="spacer"></div>
-    <a class="d-user" href="/user/my_posts.php">我的发布</a>
-    <button class="postbtn" data-href="/publish.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息</button>
+    <a class="d-user" href="/user/my_posts">我的发布</a>
+    <button class="postbtn" data-href="/publish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息</button>
   </nav>
 
   <div class="band">
@@ -52,7 +52,7 @@ foreach ($regions as $r) {
   <!-- ===== 移动端头部 ===== -->
   <header class="m-head">
     <div class="m-bar">
-      <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
+      <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
       <span class="tip">zhaopin.es</span>
     </div>
     <div class="m-seg">
@@ -93,14 +93,14 @@ foreach ($regions as $r) {
       <div class="postcard">
         <h4><?= $hire ? '要招人？' : '在找活？' ?></h4>
         <p>发布只填几项，1 分钟搞定。招满随手下架，否则 30 天自动过期。</p>
-        <button data-href="/publish.php">免费发布<?= $hire ? '招聘' : '求职' ?></button>
+        <button data-href="/publish">免费发布<?= $hire ? '招聘' : '求职' ?></button>
       </div>
     </aside>
 
     <main id="feed">
       <?php if ($total === 0): ?>
       <div class="day">暂无信息</div>
-      <p class="feed-empty">这个筛选条件下还没有信息。<a href="/publish.php">来发第一条 →</a></p>
+      <p class="feed-empty">这个筛选条件下还没有信息。<a href="/publish">来发第一条 →</a></p>
       <?php endif; ?>
       <?php foreach ($groups as $label => $posts): if ($posts === []) continue; ?>
       <div class="day <?= $label !== '今日' ? 'gap' : '' ?>"><?= zp_e($label) ?></div>
@@ -113,7 +113,7 @@ foreach ($regions as $r) {
 
   <!-- 移动端底部发布栏 -->
   <div class="m-post">
-    <button data-href="/publish.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息 <span class="free">· 免费 · 30天有效</span></button>
+    <button data-href="/publish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息 <span class="free">· 免费 · 30天有效</span></button>
   </div>
 
   <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span id="toastMsg"></span></div>

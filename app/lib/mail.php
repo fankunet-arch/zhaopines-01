@@ -61,8 +61,8 @@ function zp_mail_report_alert(array $post): bool
     $stmt->execute([(int) $post['id']]);
     $total = (int) $stmt->fetchColumn();
 
-    $url = (string) zp_config('site.base_url', '') . '/detail.php?id=' . $post['public_code'];
-    $cpUrl = (string) zp_config('site.base_url', '') . '/c/cp/reports.php';
+    $url = (string) zp_config('site.base_url', '') . '/detail?id=' . $post['public_code'];
+    $cpUrl = (string) zp_config('site.base_url', '') . '/c/cp/reports';
     $excerpt = zp_e(zp_post_excerpt($post['content'], 50));
     return zp_mail_send(
         "[西华招聘] 信息被举报（累计 {$total} 次）",

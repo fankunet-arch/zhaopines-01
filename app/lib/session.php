@@ -25,12 +25,12 @@ function zp_admin(): ?array
     return $_SESSION['admin'] ?? null;
 }
 
-/** 管理后台门卫：未登录跳转 /c/cp/login.php。 */
+/** 管理后台门卫：未登录跳转 /c/cp/login。 */
 function zp_require_admin(): array
 {
     $admin = zp_admin();
     if ($admin === null) {
-        header('Location: /c/cp/login.php');
+        header('Location: /c/cp/login');
         exit;
     }
     return $admin;

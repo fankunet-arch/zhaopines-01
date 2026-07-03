@@ -11,8 +11,8 @@ $hasWechat = ($post['wechat'] ?? null) !== null;
 $code = $post['public_code'];
 ?>
   <nav class="nav">
-    <a class="back" href="/index.php?type=<?= $isSeekPost ? 'seek' : 'job' ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回列表</a>
-    <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
+    <a class="back" href="/?type=<?= $isSeekPost ? 'seek' : 'job' ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回列表</a>
+    <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="spacer"></span>
     <span class="dom">zhaopin.es</span>
   </nav>
@@ -66,7 +66,7 @@ $code = $post['public_code'];
           <h2>相似信息 · 同在 <?= zp_e(strtok($post['region_name'], ' ')) ?>一带</h2>
           <div class="rel">
             <?php foreach ($related as $r): ?>
-            <a class="relitem" href="/detail.php?id=<?= zp_e($r['public_code']) ?>">
+            <a class="relitem" href="/detail?id=<?= zp_e($r['public_code']) ?>">
               <div class="rt"><div class="rti"><?= zp_e(zp_post_excerpt($r['content'])) ?></div><div class="rtm"><?= zp_e($r['contact_name']) ?> · <?= zp_e($r['region_name']) ?> · <?= zp_e(zp_time_ago($r['bumped_at'])) ?></div></div>
               <div class="rp"><?= zp_e($r['category_name']) ?></div>
             </a>

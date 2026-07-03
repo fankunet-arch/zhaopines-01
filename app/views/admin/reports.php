@@ -1,14 +1,14 @@
 <?php require __DIR__ . '/_nav.php'; ?>
   <div class="shell a-shell">
     <div class="a-filter">
-      <a class="a-btn sm <?= !$showAll ? 'primary' : '' ?>" href="/c/cp/reports.php">待处理</a>
-      <a class="a-btn sm <?= $showAll ? 'primary' : '' ?>" href="/c/cp/reports.php?all=1">全部</a>
+      <a class="a-btn sm <?= !$showAll ? 'primary' : '' ?>" href="/c/cp/reports">待处理</a>
+      <a class="a-btn sm <?= $showAll ? 'primary' : '' ?>" href="/c/cp/reports?all=1">全部</a>
     </div>
     <div class="a-tablewrap"><table class="a-table">
       <tr><th>被举报信息</th><th>理由</th><th>举报时间</th><th>帖子状态</th><th>处理</th></tr>
       <?php foreach ($rows as $r): ?>
       <tr>
-        <td class="c-content"><a class="a-link" href="/detail.php?id=<?= zp_e($r['public_code']) ?>" target="_blank"><?= zp_e(zp_post_excerpt($r['content'], 26)) ?></a><br><small><?= zp_e($r['contact_name']) ?></small></td>
+        <td class="c-content"><a class="a-link" href="/detail?id=<?= zp_e($r['public_code']) ?>" target="_blank"><?= zp_e(zp_post_excerpt($r['content'], 26)) ?></a><br><small><?= zp_e($r['contact_name']) ?></small></td>
         <td><?= zp_e($r['reason'] ?? '—') ?></td>
         <td><?= zp_e(zp_time_ago($r['created_at'])) ?></td>
         <td><?= zp_e(zp_post_status_label((int) $r['post_status'])) ?></td>

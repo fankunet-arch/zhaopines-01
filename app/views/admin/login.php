@@ -1,5 +1,5 @@
   <nav class="nav">
-    <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
+    <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="a-badge">管理后台</span>
     <span class="spacer"></span>
     <span class="dom">zhaopin.es</span>
@@ -16,10 +16,10 @@
         使用 Google 登录
       </a>
       <?php else: ?>
-      <p class="a-err">Google OAuth 尚未配置：请在 app/config/config.php 填写 google_oauth 的 client_id / client_secret（回调地址 <?= zp_e((string) zp_config('site.base_url', '')) ?>/c/cp/login.php）。</p>
+      <p class="a-err">Google OAuth 尚未配置：请在 app/config/config.php 填写 google_oauth 的 client_id / client_secret（回调地址 <?= zp_e((string) zp_config('site.base_url', '')) ?>/c/cp/login）。</p>
       <?php endif; ?>
       <?php if ($devEmail !== ''): ?>
-      <a class="a-btn a-devbtn" href="/c/cp/login.php?dev=1">本地调试直登（<?= zp_e($devEmail) ?>）</a>
+      <a class="a-btn a-devbtn" href="/c/cp/login?dev=1">本地调试直登（<?= zp_e($devEmail) ?>）</a>
       <p class="a-devnote">⚠ 仅本地调试可见：config.dev.fake_admin_email 生产环境必须留空</p>
       <?php endif; ?>
     </div>

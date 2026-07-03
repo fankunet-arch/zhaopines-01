@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/_nav.php'; ?>
   <div class="shell a-shell">
-    <form class="a-filter" method="get" action="/c/cp/posts.php">
+    <form class="a-filter" method="get" action="/c/cp/posts">
       <select name="type" class="sel">
         <option value="">全部板块</option>
         <option value="1" <?= ($_GET['type'] ?? '') === '1' ? 'selected' : '' ?>>招聘</option>
@@ -22,7 +22,7 @@
       <?php foreach ($rows as $r): ?>
       <tr class="<?= (int) $r['suspicious'] === 1 ? 'sus' : '' ?>">
         <td><?= (int) $r['type'] === 1 ? '招聘' : '求职' ?></td>
-        <td class="c-content"><a class="a-link" href="/detail.php?id=<?= zp_e($r['public_code']) ?>" target="_blank"><?= zp_e(zp_post_excerpt($r['content'], 28)) ?></a><?= (int) $r['suspicious'] === 1 ? ' <span class="flag">可疑</span>' : '' ?></td>
+        <td class="c-content"><a class="a-link" href="/detail?id=<?= zp_e($r['public_code']) ?>" target="_blank"><?= zp_e(zp_post_excerpt($r['content'], 28)) ?></a><?= (int) $r['suspicious'] === 1 ? ' <span class="flag">可疑</span>' : '' ?></td>
         <td><?= zp_e($r['contact_name']) ?><br><small><?= zp_e($r['phone']) ?></small></td>
         <td><?= zp_e($r['region_name']) ?><br><small><?= zp_e($r['category_name']) ?></small></td>
         <td>📞<?= (int) $r['phone_views'] ?> 💬<?= (int) $r['wechat_views'] ?></td>

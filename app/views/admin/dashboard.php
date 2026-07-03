@@ -17,7 +17,7 @@
         <td><?= zp_e($r['region_name']) ?> / <?= zp_e($r['category_name']) ?></td>
         <td><?= zp_e(zp_post_status_label((int) $r['status'])) ?></td>
         <td><?= zp_e(zp_time_ago($r['created_at'])) ?></td>
-        <td><a class="a-link" href="/detail.php?id=<?= zp_e($r['public_code']) ?>" target="_blank">查看</a></td>
+        <td><a class="a-link" href="/detail?id=<?= zp_e($r['public_code']) ?>" target="_blank">查看</a></td>
       </tr>
       <?php endforeach; ?>
       <?php if ($recent === []): ?><tr><td colspan="7" class="empty">还没有任何发布</td></tr><?php endif; ?>

@@ -42,8 +42,8 @@ function zp_md_html(string $md): string
 }
 ?>
   <nav class="nav">
-    <a class="back" href="/index.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回</a>
-    <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
+    <a class="back" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回</a>
+    <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="spacer"></span>
     <span class="dom">zhaopin.es</span>
   </nav>

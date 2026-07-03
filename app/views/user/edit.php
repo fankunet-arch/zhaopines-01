@@ -1,8 +1,8 @@
 <?php /** @var array $user @var array $post @var string $err @var string $csrf
         @var array $categories @var array $topRegions @var array $cities @var int $curTop */ ?>
   <nav class="nav">
-    <a class="back" href="/user/my_posts.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>我的发布</a>
-    <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
+    <a class="back" href="/user/my_posts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>我的发布</a>
+    <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="spacer"></span>
     <span class="u-name"><?= zp_e($user['name']) ?></span>
   </nav>
@@ -11,7 +11,7 @@
     <h1 class="u-h1">编辑信息</h1>
     <?php if ($err !== ''): ?><p class="u-err"><?= zp_e($err) ?></p><?php endif; ?>
 
-    <form class="u-panel" method="post" action="/user/edit.php?id=<?= zp_e($post['public_code']) ?>">
+    <form class="u-panel" method="post" action="/user/edit?id=<?= zp_e($post['public_code']) ?>">
       <input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>">
       <input type="hidden" name="id" value="<?= zp_e($post['public_code']) ?>">
 

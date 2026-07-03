@@ -23,7 +23,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                ->execute([zp_now(), (int) $pid]);
         }
     }
-    header('Location: /c/cp/reports.php');
+    header('Location: /c/cp/reports');
     exit;
 }
 

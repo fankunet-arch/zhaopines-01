@@ -1,6 +1,6 @@
   <nav class="nav">
-    <a class="back" href="/index.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回</a>
-    <a class="brand" href="/index.php"><span class="zh">西华<span class="hl">招聘</span></span></a>
+    <a class="back" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回</a>
+    <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="spacer"></span>
     <span class="dom">zhaopin.es</span>
   </nav>
@@ -16,12 +16,12 @@
         使用 Google 登录
       </a>
       <?php else: ?>
-      <p class="u-err">Google OAuth 尚未配置：请在 app/config/config.php 填写 google_oauth（回调地址 <?= zp_e((string) zp_config('site.base_url', '')) ?>/user/login.php）。</p>
+      <p class="u-err">Google OAuth 尚未配置：请在 app/config/config.php 填写 google_oauth（回调地址 <?= zp_e((string) zp_config('site.base_url', '')) ?>/user/login）。</p>
       <?php endif; ?>
       <?php if ($devName !== ''): ?>
-      <a class="u-btn u-devbtn" href="/user/login.php?dev=1">本地调试直登（<?= zp_e($devName) ?>）</a>
+      <a class="u-btn u-devbtn" href="/user/login?dev=1">本地调试直登（<?= zp_e($devName) ?>）</a>
       <p class="u-devnote">⚠ 仅本地调试可见：config.dev.fake_user_name 生产环境必须留空</p>
       <?php endif; ?>
-      <p class="u-guest">不想注册？<a href="/publish.php">游客也能直接发布</a>，只是发出后不能再改。</p>
+      <p class="u-guest">不想注册？<a href="/publish">游客也能直接发布</a>，只是发出后不能再改。</p>
     </div>
   </div>

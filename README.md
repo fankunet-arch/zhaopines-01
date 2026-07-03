@@ -43,20 +43,36 @@
    </VirtualHost>
    ```
 
-   Nginx 示例：
+   Nginx 示例（含无扩展名 URL：/publish → publish.php）：
 
    ```nginx
    server {
        server_name www.zhaopin.es;
        root /var/www/zhaopin/zp_html;
        index index.php;
+
+       location / {
+           # 无扩展名请求：先按原样找文件/目录，找不到再映射到 .php
+           try_files $uri $uri/ @extless;
+       }
+       location @extless {
+           rewrite ^(.*[^/])/?$ $1.php last;
+       }
        location ~ \.php$ {
+           # $request_uri 是客户端原始地址，内部 rewrite 不会改变它：
+           # 外部直访 /xxx.php → 301 规范化；内部映射来的请求正常执行
+           if ($request_uri ~ ^/([^?]+)\.php(\?|$)) {
+               return 301 /$1$is_args$args;
+           }
            include fastcgi_params;
            fastcgi_pass unix:/run/php/php8.2-fpm.sock;
            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
        }
    }
    ```
+
+   Apache 下无需额外配置：`zp_html/.htaccess` 已内置同等重写规则
+   （mod_rewrite），无扩展名 URL 自动映射，显式 `.php` 访问 301 规范化。
 
    双保险：`app/.htaccess` 已内置 `Require all denied`，即使误把 `app/`
    放进可访问路径（部分共享主机），Apache 下也会拒绝一切 HTTP 访问。
@@ -88,7 +104,8 @@
 
 ```bash
 cp app/config/config.example.php app/config/config.php   # 填写本地 DB
-php -S 127.0.0.1:8000 -t zp_html                         # document root 指向 zp_html/
+# dev_router 模拟生产的无扩展名 URL（内置服务器不解析 .htaccess）
+php -S 127.0.0.1:8000 -t zp_html tools/dev_router.php
 ```
 
 本地调试管理后台（无 Google OAuth 凭据时）：在 `config.php` 的

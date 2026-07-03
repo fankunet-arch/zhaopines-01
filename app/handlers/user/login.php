@@ -7,18 +7,18 @@ declare(strict_types=1);
  */
 zp_session_start();
 if (zp_user() !== null) {
-    header('Location: /user/my_posts.php');
+    header('Location: /user/my_posts');
     exit;
 }
 
-$redirectUri = (string) zp_config('site.base_url', '') . '/user/login.php';
+$redirectUri = (string) zp_config('site.base_url', '') . '/user/login';
 $err = '';
 
 // 本地调试直登
 $devName = (string) zp_config('dev.fake_user_name', '');
 if ($devName !== '' && ($_GET['dev'] ?? '') === '1') {
     if (zp_user_login(['sub' => 'dev-user-1', 'email' => '', 'name' => $devName]) !== null) {
-        header('Location: /user/my_posts.php');
+        header('Location: /user/my_posts');
         exit;
     }
     $err = '该调试账号已被封禁';
@@ -32,7 +32,7 @@ if (isset($_GET['code'])) {
         try {
             $identity = zp_google_exchange_code((string) $_GET['code'], $redirectUri);
             if (zp_user_login($identity) !== null) {
-                header('Location: /user/my_posts.php');
+                header('Location: /user/my_posts');
                 exit;
             }
             $err = '该账号已被封禁';
