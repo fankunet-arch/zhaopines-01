@@ -34,9 +34,12 @@ return [
         'name'     => '西华招聘',
     ],
 
-    // 本地调试专用。fake_admin_email 非空时 /c/cp/login.php?dev=1 可免 OAuth
-    // 直登（邮箱仍须在 zhaopin_admins 白名单内）。生产环境必须留空！
+    // 本地调试专用（生产环境两项都必须留空！）：
+    // fake_admin_email 非空时 /c/cp/login.php?dev=1 免 OAuth 直登后台
+    //（邮箱仍须在 zhaopin_admins 白名单内）；
+    // fake_user_name 非空时 /user/login.php?dev=1 免 OAuth 直登用户后台。
     'dev' => [
         'fake_admin_email' => '',
+        'fake_user_name'   => '',
     ],
 ];

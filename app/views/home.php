@@ -28,6 +28,7 @@ foreach ($regions as $r) {
       <input name="q" value="<?= zp_e($filters['q']) ?>" placeholder="搜内容、联系人、地区…">
     </form>
     <div class="spacer"></div>
+    <a class="d-user" href="/user/my_posts.php">我的发布</a>
     <button class="postbtn" data-href="/publish.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息</button>
   </nav>
 

@@ -100,7 +100,8 @@ if ((int) $stmt->fetchColumn() >= $perHour) {
 $phoneNorm = zp_phone_norm($phone);
 $contentHash = zp_content_hash($content);
 
-// 同电话同内容：每日限 1 条；7 天内重复 → 注册用户顶帖 / 游客拒绝
+// 同电话同内容：每日限 1 条；7 天内重复 → 注册用户顶帖代替新发 / 游客拒绝（docs/01 §4.2）
+$user = zp_user();
 $bumpWindow = zp_setting_int('bump_window_days', 7);
 $stmt = $db->prepare(
     'SELECT id, public_code, created_at, poster_type, user_id FROM ' . zp_table('posts')
@@ -108,6 +109,12 @@ $stmt = $db->prepare(
 );
 $stmt->execute([$phoneNorm, $contentHash, gmdate('Y-m-d H:i:s', time() - $bumpWindow * 86400)]);
 if (($dup = $stmt->fetch()) !== false) {
+    if ($user !== null && (int) $dup['poster_type'] === 2 && (int) $dup['user_id'] === $user['id']) {
+        $db->prepare('UPDATE ' . zp_table('posts') . ' SET bumped_at = ?, status = 1 WHERE id = ?')
+           ->execute([$now, (int) $dup['id']]);
+        zp_json(['ok' => true, 'bumped' => true, 'url' => '/detail.php?id=' . $dup['public_code'],
+            'msg' => '这条信息 7 天内已发过，已为你顶帖刷新排序']);
+    }
     zp_json(['ok' => false, 'error' => 'duplicate',
         'msg' => '相同内容近期已发布过（同一信息每天限发 1 条；注册用户可在 7 天内用"顶帖"刷新排序）',
         'url' => '/detail.php?id=' . $dup['public_code']], 409);
@@ -134,10 +141,12 @@ $db->prepare(
     'INSERT INTO ' . zp_table('posts')
     . ' (public_code, type, content, content_hash, contact_name, phone, phone_norm, wechat,'
     . ' region_id, category_id, poster_type, user_id, suspicious, status, post_ip, created_at, bumped_at)'
-    . ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NULL, ?, 1, ?, ?, ?)'
+    . ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?)'
 )->execute([
     $publicCode, $type, $content, $contentHash, $contactName, $phone, $phoneNorm,
-    $wechat !== '' ? $wechat : null, $regionId, $categoryId, $suspicious, $ipBin, $now, $now,
+    $wechat !== '' ? $wechat : null, $regionId, $categoryId,
+    $user !== null ? 2 : 1, $user['id'] ?? null,
+    $suspicious, $ipBin, $now, $now,
 ]);
 
 zp_json(['ok' => true, 'url' => '/detail.php?id=' . $publicCode, 'code' => $publicCode]);

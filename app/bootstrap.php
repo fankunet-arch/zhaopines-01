@@ -25,6 +25,7 @@ require ZP_APP_PATH . '/lib/settings.php';
 require ZP_APP_PATH . '/lib/session.php';
 require ZP_APP_PATH . '/lib/auth.php';
 require ZP_APP_PATH . '/lib/posts.php';
+require ZP_APP_PATH . '/lib/mail.php';
 
 $GLOBALS['ZP_REGISTRY'] = require ZP_APP_PATH . '/registry.php';
 

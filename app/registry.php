@@ -23,6 +23,7 @@ return [
     'user.edit'       => 'user/edit.php',
     'user.redeem'     => 'user/redeem.php',
     'user.use_coupon' => 'user/use_coupon.php',
+    'user.logout'     => 'user/logout.php',
 
     // 管理员后台（约定入口：/c/cp/）
     'admin.login'      => 'admin/login.php',

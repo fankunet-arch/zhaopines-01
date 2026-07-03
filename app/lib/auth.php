@@ -60,6 +60,54 @@ function zp_google_exchange_code(string $code, string $redirectUri): array
 }
 
 /**
+ * 普通用户登录：按 google_sub 找或建（数据最小化：不存邮箱，见 docs/03 §3.5）。
+ * 返回用户数组；被封禁（status=0）返回 null。
+ */
+function zp_user_login(array $identity): ?array
+{
+    $db = zp_db();
+    $U = zp_table('users');
+    $stmt = $db->prepare("SELECT * FROM $U WHERE google_sub = ?");
+    $stmt->execute([$identity['sub']]);
+    $user = $stmt->fetch();
+    if ($user === false) {
+        $code = zp_public_code(8);
+        $db->prepare("INSERT INTO $U (public_code, google_sub, display_name, status, created_at, last_login_at) VALUES (?, ?, ?, 1, ?, ?)")
+           ->execute([$code, $identity['sub'], $identity['name'] ?: null, zp_now(), zp_now()]);
+        $stmt->execute([$identity['sub']]);
+        $user = $stmt->fetch();
+    } else {
+        if ((int) $user['status'] !== 1) {
+            return null;
+        }
+        $db->prepare("UPDATE $U SET display_name = ?, last_login_at = ? WHERE id = ?")
+           ->execute([$identity['name'] ?: $user['display_name'], zp_now(), $user['id']]);
+    }
+    zp_session_start();
+    session_regenerate_id(true);
+    $_SESSION['user'] = ['id' => (int) $user['id'], 'code' => $user['public_code'], 'name' => (string) ($identity['name'] ?: $user['display_name'] ?: '用户')];
+    return $_SESSION['user'];
+}
+
+/** 当前登录用户（['id','code','name']）或 null。 */
+function zp_user(): ?array
+{
+    zp_session_start();
+    return $_SESSION['user'] ?? null;
+}
+
+/** 用户后台门卫：未登录跳转登录页。 */
+function zp_require_user(): array
+{
+    $user = zp_user();
+    if ($user === null) {
+        header('Location: /user/login.php');
+        exit;
+    }
+    return $user;
+}
+
+/**
  * 用 Google 身份尝试建立管理员会话：邮箱命中白名单（status=1）才放行。
  * 成功返回 true 并回填 google_sub / display_name。
  */

@@ -30,7 +30,8 @@ if ($stmt->fetch() === false) {
        ->execute([(int) $post['id'], $reason !== '' ? $reason : null, $ipBin, zp_now()]);
     $db->prepare('UPDATE ' . zp_table('posts') . ' SET report_count = report_count + 1 WHERE id = ?')
        ->execute([(int) $post['id']]);
-    // TODO(P0 收尾): Brevo 邮件提醒（合并降频，收件人取 settings.report_recipients）
+    // Brevo 邮件提醒（同帖合并降频；未配置 Brevo/收件人时静默跳过）
+    zp_mail_report_alert($post);
 }
 
 zp_json(['ok' => true, 'msg' => '已收到你的举报，谢谢']);
