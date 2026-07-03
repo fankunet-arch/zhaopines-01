@@ -1,0 +1,81 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * 管理员登录：Google OAuth + 邮箱白名单（zhaopin_admins），全站零密码。
+ * docs/01 §4.3：Google 验证通过且邮箱在白名单内，双重满足才授权。
+ */
+
+/** Google 授权跳转 URL（管理员登录用，redirect 回 /c/cp/login.php）。 */
+function zp_google_auth_url(string $redirectUri): string
+{
+    zp_session_start();
+    $state = bin2hex(random_bytes(16));
+    $_SESSION['oauth_state'] = $state;
+    return 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query([
+        'client_id'     => (string) zp_config('google_oauth.client_id'),
+        'redirect_uri'  => $redirectUri,
+        'response_type' => 'code',
+        'scope'         => 'openid email profile',
+        'state'         => $state,
+        'prompt'        => 'select_account',
+    ]);
+}
+
+/**
+ * 用授权码换取用户信息。返回 ['sub','email','name'] 或抛异常。
+ * id_token 直接从 Google token 端点经 TLS 获取，无需再验签。
+ */
+function zp_google_exchange_code(string $code, string $redirectUri): array
+{
+    $ch = curl_init('https://oauth2.googleapis.com/token');
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => http_build_query([
+            'code'          => $code,
+            'client_id'     => (string) zp_config('google_oauth.client_id'),
+            'client_secret' => (string) zp_config('google_oauth.client_secret'),
+            'redirect_uri'  => $redirectUri,
+            'grant_type'    => 'authorization_code',
+        ]),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 15,
+    ]);
+    $resp = curl_exec($ch);
+    curl_close($ch);
+    $data = is_string($resp) ? json_decode($resp, true) : null;
+    if (!is_array($data) || empty($data['id_token'])) {
+        throw new RuntimeException('Google 令牌交换失败');
+    }
+    $parts = explode('.', (string) $data['id_token']);
+    $payload = json_decode(base64_decode(strtr($parts[1] ?? '', '-_', '+/')) ?: '', true);
+    if (!is_array($payload) || empty($payload['sub'])) {
+        throw new RuntimeException('id_token 解析失败');
+    }
+    return [
+        'sub'   => (string) $payload['sub'],
+        'email' => (string) ($payload['email'] ?? ''),
+        'name'  => (string) ($payload['name'] ?? ''),
+    ];
+}
+
+/**
+ * 用 Google 身份尝试建立管理员会话：邮箱命中白名单（status=1）才放行。
+ * 成功返回 true 并回填 google_sub / display_name。
+ */
+function zp_admin_login(array $identity): bool
+{
+    $db = zp_db();
+    $stmt = $db->prepare('SELECT id, email FROM ' . zp_table('admins') . ' WHERE email = ? AND status = 1');
+    $stmt->execute([$identity['email']]);
+    $row = $stmt->fetch();
+    if ($row === false) {
+        return false;
+    }
+    $db->prepare('UPDATE ' . zp_table('admins') . ' SET google_sub = ?, display_name = ? WHERE id = ?')
+       ->execute([$identity['sub'] ?: null, $identity['name'] ?: null, $row['id']]);
+    zp_session_start();
+    session_regenerate_id(true);
+    $_SESSION['admin'] = ['id' => (int) $row['id'], 'email' => $row['email'], 'name' => $identity['name']];
+    return true;
+}

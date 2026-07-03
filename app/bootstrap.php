@@ -20,6 +20,11 @@ $GLOBALS['ZP_CONFIG'] = require $zpConfigFile;
 require ZP_APP_PATH . '/lib/db.php';
 require ZP_APP_PATH . '/lib/view.php';
 require ZP_APP_PATH . '/lib/response.php';
+require ZP_APP_PATH . '/lib/util.php';
+require ZP_APP_PATH . '/lib/settings.php';
+require ZP_APP_PATH . '/lib/session.php';
+require ZP_APP_PATH . '/lib/auth.php';
+require ZP_APP_PATH . '/lib/posts.php';
 
 $GLOBALS['ZP_REGISTRY'] = require ZP_APP_PATH . '/registry.php';
 

@@ -52,3 +52,10 @@
   .cols{grid-template-columns:1fr;grid-template-areas:"preview" "form"}
   .previewcol{position:static}
 }
+
+/* 真实表单补充 */
+.hp{position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden}
+.newcat{margin-top:8px;font-size:13.5px}
+.area.big{min-height:130px}
+.formerr{margin-top:10px;font-size:13.5px;color:#c0392b;line-height:1.5}
+.formerr a{color:var(--accent);font-weight:700}

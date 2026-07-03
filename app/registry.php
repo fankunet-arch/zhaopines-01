@@ -24,7 +24,9 @@ return [
     'user.redeem'     => 'user/redeem.php',
     'user.use_coupon' => 'user/use_coupon.php',
 
-    // 管理员后台
+    // 管理员后台（约定入口：/c/cp/）
+    'admin.login'      => 'admin/login.php',
+    'admin.logout'     => 'admin/logout.php',
     'admin.posts'      => 'admin/posts.php',
     'admin.categories' => 'admin/categories.php',
     'admin.reports'    => 'admin/reports.php',

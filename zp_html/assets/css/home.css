@@ -78,3 +78,8 @@
   .card{border-radius:20px}
   .title{font-size:16.5px}
 }
+
+/* 真实数据补充 */
+.feed-empty{font-size:14.5px;color:var(--ink-soft);padding:10px 0 30px}
+.feed-empty a{color:var(--accent);font-weight:700}
+.seg button{cursor:pointer}

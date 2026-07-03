@@ -65,11 +65,23 @@
    `app/config/config.php` 并填写 DB 密码、Google OAuth、Brevo Key。
    该文件已被 `.gitignore` 排除，不入库、不进版本库。
 
-3. **数据库**：MySQL 8.x，表前缀 `zhaopin_`。先执行
-   `docs/03_数据库设计.md` 的 DDL，再灌 `docs/seed_regions.sql` 与
-   `docs/seed_categories.sql`。
+3. **数据库**：MySQL 8.4/8.x，表前缀 `zhaopin_`，建库文件在 `db/`，
+   按顺序执行：
 
-4. **HTTPS 必须**（OAuth 与取号接口）；其余上线闸门项见
+   ```bash
+   mysql zhaopin < db/schema.sql            # 12 张表 + settings 初始参数
+   mysql zhaopin < db/seed_regions.sql      # 地区种子（19 大区 + 约 90 市）
+   mysql zhaopin < db/seed_categories.sql   # 职位类别种子（14 类）
+   # 最后插入第一位管理员白名单（邮箱换成真实管理员的 Google 邮箱）：
+   mysql zhaopin -e "INSERT INTO zhaopin_admins (email, status, created_at)
+                     VALUES ('admin@example.com', 1, UTC_TIMESTAMP());"
+   ```
+
+4. **管理后台**：约定入口为 `https://<域名>/c/cp/`（对应
+   `zp_html/c/cp/`）。登录仅 Google OAuth + 邮箱白名单（全站零密码），
+   回调地址配置为 `<base_url>/c/cp/login.php`。
+
+5. **HTTPS 必须**（OAuth 与取号接口）；其余上线闸门项见
    `docs/04_开发路线图.md` §4。
 
 ## 本地开发
@@ -78,3 +90,7 @@
 cp app/config/config.example.php app/config/config.php   # 填写本地 DB
 php -S 127.0.0.1:8000 -t zp_html                         # document root 指向 zp_html/
 ```
+
+本地调试管理后台（无 Google OAuth 凭据时）：在 `config.php` 的
+`dev.fake_admin_email` 填一个已在 `zhaopin_admins` 白名单内的邮箱，
+访问 `/c/cp/login.php?dev=1` 直登。**生产环境该项必须留空。**
