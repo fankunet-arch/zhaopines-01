@@ -83,3 +83,9 @@ function zp_day_bucket(string $utc): string
     if ($d === $yesterday) return '昨天';
     return '更早';
 }
+
+/** 站点根地址（去掉误配的末尾斜杠，防止拼出 //path 导致 OAuth redirect_uri 不匹配）。 */
+function zp_base_url(): string
+{
+    return rtrim((string) zp_config('site.base_url', ''), '/');
+}

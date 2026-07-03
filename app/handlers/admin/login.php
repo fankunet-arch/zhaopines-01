@@ -11,7 +11,7 @@ if (zp_admin() !== null) {
     exit;
 }
 
-$redirectUri = (string) zp_config('site.base_url', '') . '/c/cp/login';
+$redirectUri = zp_base_url() . '/c/cp/login';
 $err = '';
 
 // 本地调试直登（仅当 config.dev.fake_admin_email 明确配置时可用）

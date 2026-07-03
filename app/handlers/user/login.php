@@ -11,7 +11,7 @@ if (zp_user() !== null) {
     exit;
 }
 
-$redirectUri = (string) zp_config('site.base_url', '') . '/user/login';
+$redirectUri = zp_base_url() . '/user/login';
 $err = '';
 
 // 本地调试直登
