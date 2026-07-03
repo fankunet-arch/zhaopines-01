@@ -60,7 +60,12 @@
        }
        location ~ \.php$ {
            # $request_uri 是客户端原始地址，内部 rewrite 不会改变它：
-           # 外部直访 /xxx.php → 301 规范化；内部映射来的请求正常执行
+           # 外部直访才触发 301；内部映射来的请求正常执行，不会循环
+           # ① /…/index 与 /…/index.php → 301 到目录本身（/ 或 /c/cp/）
+           if ($request_uri ~ ^/((?:[^?]*/)?)index(\.php)?(\?|$)) {
+               return 301 /$1$is_args$args;
+           }
+           # ② 其余 /xxx.php → 301 到 /xxx
            if ($request_uri ~ ^/([^?]+)\.php(\?|$)) {
                return 301 /$1$is_args$args;
            }

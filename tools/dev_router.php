@@ -9,10 +9,18 @@ declare(strict_types=1);
 $docroot = realpath(__DIR__ . '/../zp_html');
 $path = urldecode((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-// 与生产一致：显式 .php 访问 301 到无扩展名地址
+$qs = (string) ($_SERVER['QUERY_STRING'] ?? '');
+$qs = $qs !== '' ? '?' . $qs : '';
+
+// 与生产一致①：任意目录下的 /index.php 与 /index → 301 到目录本身
+if (preg_match('#^(.*/)index(?:\.php)?$#', $path, $m)) {
+    header('Location: ' . $m[1] . $qs, true, 301);
+    return true;
+}
+
+// 与生产一致②：其余显式 .php 访问 301 到无扩展名地址
 if (preg_match('#^(.+)\.php$#', $path, $m) && is_file($docroot . $path)) {
-    $qs = (string) ($_SERVER['QUERY_STRING'] ?? '');
-    header('Location: ' . ($m[1] === '/index' ? '/' : $m[1]) . ($qs !== '' ? '?' . $qs : ''), true, 301);
+    header('Location: ' . $m[1] . $qs, true, 301);
     return true;
 }
 
