@@ -28,7 +28,7 @@ foreach ($regions as $r) {
       <input name="q" value="<?= zp_e($filters['q']) ?>" placeholder="搜内容、联系人、地区…">
     </form>
     <div class="spacer"></div>
-    <a class="d-user" href="/user/my_posts">我的发布</a>
+    <?php require __DIR__ . '/_navuser.php'; ?>
     <button class="postbtn" data-href="/publish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>发布信息</button>
   </nav>
 
@@ -53,7 +53,7 @@ foreach ($regions as $r) {
   <header class="m-head">
     <div class="m-bar">
       <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
-      <span class="tip">zhaopin.es</span>
+      <?php require __DIR__ . '/_navuser.php'; ?>
     </div>
     <div class="m-seg">
       <div class="seg">
