@@ -55,3 +55,20 @@
 .a-google{display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);border-radius:13px;padding:13px;font-weight:700;font-size:15px;background:#fff;box-shadow:var(--shadow-card)}
 .a-devbtn{display:block;margin-top:12px}
 .a-devnote{font-size:11.5px;color:#c0392b;margin-top:8px}
+
+/* 置顶券/管理员页补充 */
+.a-lbl{font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.a-newcodes{background:#FFF8E7;border:1px solid rgba(255,200,61,.5);border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:13.5px;color:#5a4500}
+.a-newcodes .codes{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+.a-newcodes code{background:#fff;border:1px solid rgba(255,200,61,.6);border-radius:8px;padding:5px 10px;font-weight:700;font-size:14px}
+.c-desc{font-size:12.5px;color:var(--ink-soft);max-width:340px}
+.a-editpanel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow-card)}
+.a-editpanel .field{margin-bottom:18px}
+.a-editpanel .lab{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+.a-editpanel .input,.a-editpanel .area{width:100%;border:1px solid var(--line);border-radius:13px;padding:12px 13px;font-family:var(--body);font-size:14.5px;outline:none}
+.a-editpanel .area{resize:none;min-height:120px;line-height:1.5}
+.a-editpanel .selwrap{position:relative;display:block}
+.a-editpanel .selwrap::after{content:"▾";position:absolute;right:15px;top:50%;transform:translateY(-50%);color:var(--ink-soft);pointer-events:none;font-size:12px}
+.a-editpanel .sel{width:100%;appearance:none;border:1px solid var(--line);border-radius:13px;padding:12px 34px 12px 13px;font-family:var(--body);font-size:14.5px;outline:none;cursor:pointer;background:#fff}
+.a-editpanel .row{display:flex;gap:12px;flex-wrap:wrap}
+.a-editpanel .row .field{flex:1;min-width:150px}

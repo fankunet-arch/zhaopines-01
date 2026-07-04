@@ -1,4 +1,4 @@
-<?php /** @var array $user @var array $rows @var string $notice @var string $csrf */ ?>
+<?php /** @var array $user @var array $rows @var array $coupons @var string $notice @var string $csrf */ ?>
   <nav class="nav">
     <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="u-badge">我的发布</span>
@@ -13,6 +13,26 @@
     <div class="u-top">
       <h1>我的发布</h1>
       <a class="u-btn primary" href="/publish">+ 发新信息</a>
+    </div>
+
+    <!-- 置顶券：兑换 + 余量 -->
+    <div class="u-coupon">
+      <div class="u-coupon-info">
+        <b>置顶券</b>
+        <?php if ($coupons !== []): ?>
+        <span>可用 <?= count($coupons) ?> 张（<?php
+            $days = array_map(fn($c) => (int) $c['top_days'] . '天', $coupons);
+            echo zp_e(implode('、', array_slice($days, 0, 5)));
+        ?>）——在下方帖子上点「用券置顶」</span>
+        <?php else: ?>
+        <span>没有可用的券。找管理员领兑换码，在右侧输入即可入账</span>
+        <?php endif; ?>
+      </div>
+      <form class="u-coupon-form" method="post" action="/user/redeem">
+        <input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>">
+        <input class="input" type="text" name="code" placeholder="输入兑换码" maxlength="20" required>
+        <button class="u-btn primary" type="submit">兑换</button>
+      </form>
     </div>
 
     <?php if ($rows === []): ?>
@@ -37,6 +57,11 @@
           <a class="u-btn sm" href="/user/edit?id=<?= zp_e($r['public_code']) ?>">编辑</a>
           <form method="post"><input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $r['id'] ?>"><input type="hidden" name="action" value="bump"><button class="u-btn sm" type="submit">顶帖</button></form>
           <?php if ($online): ?>
+          <?php if ((int) $r['is_top'] === 1): ?>
+          <span class="u-topbadge">置顶中 · <?= zp_e(zp_madrid($r['top_expire_at'])->format('n月j日')) ?>到期</span>
+          <?php elseif ($coupons !== []): ?>
+          <form method="post" action="/user/use_coupon"><input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>"><input type="hidden" name="post_id" value="<?= (int) $r['id'] ?>"><button class="u-btn sm gold" type="submit">用券置顶</button></form>
+          <?php endif; ?>
           <form method="post"><input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $r['id'] ?>"><input type="hidden" name="action" value="offline"><button class="u-btn sm" type="submit">已招到/已找到·下架</button></form>
           <?php endif; ?>
           <form method="post" onsubmit="return confirm('确认删除？删除后无法恢复')"><input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $r['id'] ?>"><input type="hidden" name="action" value="delete"><button class="u-btn sm danger" type="submit">删除</button></form>

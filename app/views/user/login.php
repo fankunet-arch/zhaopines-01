@@ -16,7 +16,7 @@
         使用 Google 登录
       </a>
       <?php else: ?>
-      <p class="u-err">Google OAuth 尚未配置：请在 app/config/config.php 填写 google_oauth（回调地址 <?= zp_e((string) zp_config('site.base_url', '')) ?>/user/login）。</p>
+      <p class="u-err">登录服务尚未配置，请稍后再试。</p>
       <?php endif; ?>
       <?php if ($devName !== ''): ?>
       <a class="u-btn u-devbtn" href="/user/login?dev=1">本地调试直登（<?= zp_e($devName) ?>）</a>

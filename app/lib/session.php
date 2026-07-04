@@ -36,6 +36,32 @@ function zp_require_admin(): array
     return $admin;
 }
 
+/** 超级管理员门卫：非超管一律拒绝。 */
+function zp_require_super_admin(): array
+{
+    $admin = zp_require_admin();
+    if ((int) ($admin['role'] ?? 0) !== 2) {
+        http_response_code(403);
+        exit('无权访问');
+    }
+    return $admin;
+}
+
+/** 一次性提示（POST 后重定向回列表页时用）。 */
+function zp_flash_set(string $msg): void
+{
+    zp_session_start();
+    $_SESSION['flash'] = $msg;
+}
+
+function zp_flash_get(): string
+{
+    zp_session_start();
+    $msg = (string) ($_SESSION['flash'] ?? '');
+    unset($_SESSION['flash']);
+    return $msg;
+}
+
 /** CSRF 令牌（管理后台表单用）。 */
 function zp_csrf_token(): string
 {

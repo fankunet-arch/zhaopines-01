@@ -93,10 +93,15 @@
    mysql zhaopin < db/schema.sql            # 12 张表 + settings 初始参数
    mysql zhaopin < db/seed_regions.sql      # 地区种子（19 大区 + 约 90 市）
    mysql zhaopin < db/seed_categories.sql   # 职位类别种子（14 类）
-   # 最后插入第一位管理员白名单（邮箱换成真实管理员的 Google 邮箱）：
-   mysql zhaopin -e "INSERT INTO zhaopin_admins (email, status, created_at)
-                     VALUES ('admin@example.com', 1, UTC_TIMESTAMP());"
+   # 最后插入第一位超级管理员（邮箱换成真实管理员的 Google 邮箱，role=2）：
+   mysql zhaopin -e "INSERT INTO zhaopin_admins (email, role, status, created_at)
+                     VALUES ('admin@example.com', 2, 1, UTC_TIMESTAMP());"
    ```
+
+   旧库升级执行 `db/migrate_20260703_admin_roles.sql`（管理员分级 +
+   发券授权开关），之后管理员在后台「管理员」页维护，无需再动库。
+   角色：**超级管理员**（全部功能 + 参数配置 + 管理员管理 + 置顶券）；
+   **普通管理员**（信息/类别/举报/失效，置顶券权限由超管开关控制）。
 
 4. **管理后台**：约定入口为 `https://<域名>/c/cp/`（对应
    `zp_html/c/cp/`）。登录仅 Google OAuth + 邮箱白名单（全站零密码），

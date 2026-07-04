@@ -9,11 +9,22 @@ declare(strict_types=1);
 
 define('ZP_APP_PATH', __DIR__);
 
+// 对外零内部信息：错误细节只进日志，页面一律通用文案
+ini_set('display_errors', '0');
+set_exception_handler(function (Throwable $e): void {
+    error_log('[zhaopin] uncaught: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
+    if (!headers_sent()) {
+        http_response_code(500);
+    }
+    exit('服务暂时不可用，请稍后再试');
+});
+
 // 机密配置不进版本库：部署时把 config/config.example.php 复制为 config/config.php 填写
 $zpConfigFile = ZP_APP_PATH . '/config/config.php';
 if (!is_file($zpConfigFile)) {
+    error_log('[zhaopin] config missing: ' . $zpConfigFile);
     http_response_code(500);
-    exit('配置缺失：请将 app/config/config.example.php 复制为 app/config/config.php 并填写。');
+    exit('服务暂时不可用，请稍后再试');
 }
 $GLOBALS['ZP_CONFIG'] = require $zpConfigFile;
 

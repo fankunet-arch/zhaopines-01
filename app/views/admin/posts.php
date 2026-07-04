@@ -30,6 +30,7 @@
         <td><?= zp_e(zp_post_status_label((int) $r['status'])) ?></td>
         <td><?= zp_e(zp_time_ago($r['created_at'])) ?></td>
         <td class="c-act">
+          <a class="a-btn sm" href="/c/cp/post_edit?id=<?= zp_e($r['public_code']) ?>">编辑</a>
           <?php if ((int) $r['status'] === 1): ?>
           <form method="post"><input type="hidden" name="csrf" value="<?= zp_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $r['id'] ?>"><input type="hidden" name="action" value="offline"><button class="a-btn sm">下架</button></form>
           <?php elseif ((int) $r['status'] !== 3): ?>

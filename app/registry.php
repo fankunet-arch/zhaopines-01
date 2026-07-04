@@ -29,6 +29,8 @@ return [
     'admin.login'      => 'admin/login.php',
     'admin.logout'     => 'admin/logout.php',
     'admin.posts'      => 'admin/posts.php',
+    'admin.post_edit'  => 'admin/post_edit.php',
+    'admin.admins'     => 'admin/admins.php',
     'admin.categories' => 'admin/categories.php',
     'admin.reports'    => 'admin/reports.php',
     'admin.coupons'    => 'admin/coupons.php',

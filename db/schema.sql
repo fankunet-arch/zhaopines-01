@@ -63,6 +63,7 @@ CREATE TABLE zhaopin_users (
 CREATE TABLE zhaopin_admins (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   email VARCHAR(255) NOT NULL,
+  role TINYINT UNSIGNED NOT NULL DEFAULT 1, -- 1=普通管理员 2=超级管理员
   google_sub VARCHAR(64) DEFAULT NULL,
   display_name VARCHAR(60) DEFAULT NULL,
   status TINYINT UNSIGNED NOT NULL DEFAULT 1,
@@ -194,10 +195,12 @@ INSERT INTO zhaopin_settings (skey, svalue, updated_at) VALUES
 ('invalid_threshold',       '5',   UTC_TIMESTAMP()),
 ('contact_reveal_per_hour', '30',  UTC_TIMESTAMP()),
 ('post_per_hour_per_ip',    '5',   UTC_TIMESTAMP()),
-('field_name_map', '{"type":"f_01","content":"f_02","contact_name":"f_03","phone":"f_04","wechat":"f_05","region_id":"f_06","category_id":"f_07","new_category":"f_08","captcha":"f_09"}', UTC_TIMESTAMP());
+('field_name_map', '{"type":"f_01","content":"f_02","contact_name":"f_03","phone":"f_04","wechat":"f_05","region_id":"f_06","category_id":"f_07","new_category":"f_08","captcha":"f_09"}', UTC_TIMESTAMP()),
+('normal_admin_can_coupon',  '0',   UTC_TIMESTAMP());
 
 -- -------------------------------------------------------------
--- 第一位管理员（Google 邮箱白名单）。上线前把邮箱换成真实管理员：
--- INSERT INTO zhaopin_admins (email, status, created_at)
--- VALUES ('admin@example.com', 1, UTC_TIMESTAMP());
+-- 第一位管理员（Google 邮箱白名单，role=2 超级管理员）。
+-- 上线前把邮箱换成真实管理员：
+-- INSERT INTO zhaopin_admins (email, role, status, created_at)
+-- VALUES ('admin@example.com', 2, 1, UTC_TIMESTAMP());
 -- -------------------------------------------------------------

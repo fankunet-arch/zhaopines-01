@@ -114,7 +114,7 @@ function zp_require_user(): array
 function zp_admin_login(array $identity): bool
 {
     $db = zp_db();
-    $stmt = $db->prepare('SELECT id, email FROM ' . zp_table('admins') . ' WHERE email = ? AND status = 1');
+    $stmt = $db->prepare('SELECT id, email, role FROM ' . zp_table('admins') . ' WHERE email = ? AND status = 1');
     $stmt->execute([$identity['email']]);
     $row = $stmt->fetch();
     if ($row === false) {
@@ -124,6 +124,24 @@ function zp_admin_login(array $identity): bool
        ->execute([$identity['sub'] ?: null, $identity['name'] ?: null, $row['id']]);
     zp_session_start();
     session_regenerate_id(true);
-    $_SESSION['admin'] = ['id' => (int) $row['id'], 'email' => $row['email'], 'name' => $identity['name']];
+    $_SESSION['admin'] = [
+        'id' => (int) $row['id'], 'email' => $row['email'],
+        'name' => $identity['name'], 'role' => (int) ($row['role'] ?? 1),
+    ];
     return true;
+}
+
+/** 当前管理员是否超级管理员（role=2）。 */
+function zp_admin_is_super(): bool
+{
+    return (int) (zp_admin()['role'] ?? 0) === 2;
+}
+
+/** 当前管理员是否有权管理置顶券：超管恒可；普管取决于开关设置。 */
+function zp_admin_can_coupon(): bool
+{
+    if (zp_admin() === null) {
+        return false;
+    }
+    return zp_admin_is_super() || zp_setting('normal_admin_can_coupon', '0') === '1';
 }

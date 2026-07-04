@@ -54,3 +54,12 @@
 .u-devnote{font-size:11.5px;color:#c0392b;margin-top:8px}
 .u-guest{margin-top:18px;font-size:12.5px;color:var(--ink-soft)}
 .u-guest a{color:var(--accent);font-weight:700}
+
+/* 置顶券 */
+.u-coupon{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:#FFF8E7;border:1px solid rgba(255,200,61,.5);border-radius:14px;padding:13px 16px;margin-bottom:16px}
+.u-coupon-info{font-size:13.5px;color:#6b5200;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.u-coupon-info b{color:#5a4500}
+.u-coupon-form{display:flex;gap:8px}
+.u-coupon-form .input{width:170px;border:1px solid rgba(255,200,61,.6);border-radius:10px;padding:9px 11px;font-family:var(--body);font-size:13.5px;outline:none;background:#fff}
+.u-btn.gold{background:var(--sun);border-color:var(--sun);color:#5a4500;font-weight:800}
+.u-topbadge{font-size:12px;font-weight:800;color:#5a4500;background:var(--sun);border-radius:8px;padding:6px 10px;align-self:center}

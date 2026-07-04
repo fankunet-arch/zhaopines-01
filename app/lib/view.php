@@ -8,8 +8,9 @@ function zp_render(string $view, array $data = []): void
 {
     $file = ZP_APP_PATH . '/views/' . $view . '.php';
     if (!is_file($file)) {
+        error_log('[zhaopin] view missing: ' . $view);
         http_response_code(500);
-        exit('视图缺失: ' . htmlspecialchars($view, ENT_QUOTES, 'UTF-8'));
+        exit('服务暂时不可用，请稍后再试');
     }
     extract($data, EXTR_SKIP);
     require ZP_APP_PATH . '/views/layout/header.php';
