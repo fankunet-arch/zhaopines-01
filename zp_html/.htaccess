@@ -1,0 +1,23 @@
+# 无扩展名 URL（clean URLs）：/publish → publish.php
+# 需要 mod_rewrite；Nginx 环境的等价配置见 README「部署要点」
+Options -MultiViews -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# 1) 任意目录下的 /index.php 与 /index → 301 到目录本身（如 / 与 /c/cp/），
+#    "index" 不应作为可见 URL 出现
+RewriteCond %{THE_REQUEST} \s/+((?:[^\s?]*/)?)index(?:\.php)?[\s?]
+RewriteRule ^ /%1 [R=301,L]
+
+# 2) 其余显式访问 /xxx.php → 301 到 /xxx（规范化，避免同页双 URL 伤 SEO；查询串自动保留）
+RewriteCond %{THE_REQUEST} \s/+([^\s?]+)\.php[\s?]
+RewriteRule ^ /%1 [R=301,L]
+
+# 3) 无扩展名请求 → 内部映射到实际存在的 .php（不存在则按原样 404）
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+</IfModule>

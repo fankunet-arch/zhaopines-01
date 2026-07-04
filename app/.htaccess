@@ -1,0 +1,9 @@
+# 双保险：正确部署时 document root 指向 zp_html/，app/ 本就不在 URL 可达范围内。
+# 若误将本目录置于可访问路径下（如共享主机只能用子目录），此文件拒绝一切 HTTP 访问。
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
