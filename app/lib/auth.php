@@ -96,12 +96,12 @@ function zp_user(): ?array
     return $_SESSION['user'] ?? null;
 }
 
-/** 用户后台门卫：未登录跳转登录页。 */
+/** 用户后台门卫：未登录跳转登录页（携带原地址，登录后跳回）。 */
 function zp_require_user(): array
 {
     $user = zp_user();
     if ($user === null) {
-        header('Location: /user/login');
+        header('Location: /user/login?back=' . urlencode((string) ($_SERVER['REQUEST_URI'] ?? '/user/my_posts')));
         exit;
     }
     return $user;

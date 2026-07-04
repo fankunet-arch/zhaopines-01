@@ -3,12 +3,25 @@ declare(strict_types=1);
 
 /**
  * 用户登录（Google OAuth，零成本零密码，docs/01 §4.3）。
+ * 回跳：入口带 ?back=<站内路径> 时存入 Session，登录成功后跳回原页面
+ *（OAuth 往返靠 Session 保持；back 经 zp_safe_back 校验防开放重定向）。
  * 本地调试：config['dev']['fake_user_name'] 非空时 ?dev=1 免 OAuth 直登（生产留空）。
  */
 zp_session_start();
-if (zp_user() !== null) {
-    header('Location: /user/my_posts');
+
+// 记录回跳地址（点击登录按钮时所在的页面）
+if (isset($_GET['back'])) {
+    $_SESSION['login_back'] = zp_safe_back((string) $_GET['back'], '/user/my_posts');
+}
+$finish = function (): void {
+    $back = zp_safe_back($_SESSION['login_back'] ?? null, '/user/my_posts');
+    unset($_SESSION['login_back']);
+    header('Location: ' . $back);
     exit;
+};
+
+if (zp_user() !== null) {
+    $finish();
 }
 
 $redirectUri = zp_base_url() . '/user/login';
@@ -18,8 +31,7 @@ $err = '';
 $devName = (string) zp_config('dev.fake_user_name', '');
 if ($devName !== '' && ($_GET['dev'] ?? '') === '1') {
     if (zp_user_login(['sub' => 'dev-user-1', 'email' => '', 'name' => $devName]) !== null) {
-        header('Location: /user/my_posts');
-        exit;
+        $finish();
     }
     $err = '该调试账号已被封禁';
 }
@@ -32,8 +44,7 @@ if (isset($_GET['code'])) {
         try {
             $identity = zp_google_exchange_code((string) $_GET['code'], $redirectUri);
             if (zp_user_login($identity) !== null) {
-                header('Location: /user/my_posts');
-                exit;
+                $finish();
             }
             $err = '该账号已被封禁';
         } catch (Throwable $e) {

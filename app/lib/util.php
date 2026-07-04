@@ -89,3 +89,13 @@ function zp_base_url(): string
 {
     return rtrim((string) zp_config('site.base_url', ''), '/');
 }
+
+/** 站内回跳地址校验：只允许本站相对路径，防开放重定向。 */
+function zp_safe_back(?string $url, string $fallback): string
+{
+    $url = (string) $url;
+    if ($url === '' || $url[0] !== '/' || str_starts_with($url, '//') || str_contains($url, "\\")) {
+        return $fallback;
+    }
+    return $url;
+}

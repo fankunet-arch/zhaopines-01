@@ -14,6 +14,7 @@ $code = $post['public_code'];
     <a class="back" href="/?type=<?= $isSeekPost ? 'seek' : 'job' ?>"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>返回列表</a>
     <a class="brand" href="/"><span class="zh">西华<span class="hl">招聘</span></span></a>
     <span class="spacer"></span>
+    <?php require __DIR__ . '/_navuser.php'; ?>
     <span class="dom">zhaopin.es</span>
   </nav>
 
